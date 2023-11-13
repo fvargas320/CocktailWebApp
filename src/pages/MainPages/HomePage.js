@@ -10,6 +10,7 @@ const HomePage = () => {
                 {cocktailData.map((cocktail) => {
                     return (
                         <Cocktail
+                            id = {cocktail.Cocktail_ID}
                             image={cocktail.image_url}
                             key={cocktail.key}
                             name={cocktail.name}

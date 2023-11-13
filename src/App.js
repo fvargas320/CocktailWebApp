@@ -7,6 +7,7 @@ import Favorites from "./pages/MainPages/Favorites";
 import ViewAll from "./pages/MainPages/ViewAll";
 import { useTheme } from '@mui/material/styles';
 import Profile from "./pages/Settings/Profile";
+import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
 
 function App() {
     const theme = useTheme();
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/view-all" element={<ViewAll />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/cocktail/:id" element={<CocktailCardView />} />
 
                 </Routes>
             </div>
