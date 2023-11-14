@@ -8,14 +8,19 @@ import ViewAll from "./pages/MainPages/ViewAll";
 import { useTheme } from '@mui/material/styles';
 import Profile from "./pages/Settings/Profile";
 import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
+import {withAuthenticator} from "@aws-amplify/ui-react";
 
-function App() {
+function App({signOut, user}) {
     const theme = useTheme();
     const appBarHeight = theme.mixins.toolbar.minHeight; // Get AppBar height
 
     return (
         <Router>
-            <TopNavBar />
+            <TopNavBar user = {user} signOut={signOut}/>
+            <div>
+                {user.attributes.email}
+                <button onClick={signOut}>Sign Out</button>
+            </div>
             <div style={{ marginTop: appBarHeight + 20 }}>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
@@ -33,4 +38,4 @@ function App() {
 }
 
 
-export default App;
+export default withAuthenticator(App);

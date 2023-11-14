@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const pages = ['Home', 'Discover','Favorites', 'View All'];
 const settings = ['Profile', 'Favorites', 'Logout'];
 
-const TopNavBar = () => {
+const TopNavBar = (props) => {
     const navigate = useNavigate();
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -31,14 +31,18 @@ const TopNavBar = () => {
 
     const handleSettingClick = (setting) => {
         handleCloseUserMenu();
-        const path = formatPageToPath(setting);
-        navigate('/' + path);
-
-        const pageIndex = pages.findIndex(p => formatPageToPath(p) === path);
-        if (pageIndex >= 0) {
-            setValue(pageIndex);
+        if (setting === 'Logout') {
+            props.signOut(); // Call the signOut prop when Logout is clicked
         } else {
-            setValue(false); // false = no highlights
+            const path = formatPageToPath(setting);
+            navigate('/' + path);
+
+            const pageIndex = pages.findIndex(p => formatPageToPath(p) === path);
+            if (pageIndex >= 0) {
+                setValue(pageIndex);
+            } else {
+                setValue(false); // false = no tab highlights
+            }
         }
     };
     const formatPageToPath = (pageName) => {
@@ -82,7 +86,8 @@ const TopNavBar = () => {
                                         <MenuItem key={setting} onClick={() => handleSettingClick(setting)}>
                                             <Typography textAlign="center">{setting}</Typography>
                                         </MenuItem>
-                                    ))}
+                                    ))
+                                    }
                                 </Menu>
                             </Box>
                         </Box>
@@ -105,7 +110,7 @@ const TopNavBar = () => {
                             <Box sx={{ flexGrow: 0 }}>
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                        <Avatar alt="Logged In" src="/static/images/avatar/290.jpg" />
+                                        <Avatar alt={props.user.attributes.name} src="/static/images/avatar/290.jpg" />
                                     </IconButton>
                                 </Tooltip>
                                 <Menu

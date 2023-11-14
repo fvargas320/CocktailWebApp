@@ -51,28 +51,30 @@ function CocktailCardView({ onClose }) {
             </div>
 
             <div className="flex flex-col md:flex-row md:space-x-4">
+
                 {/* Ingredients list */}
                 <div>
+
                     <h3 className="font-medium text-lg " style={{ color: '#000000', fontFamily: 'SFProRegular', fontSize:"40px" }}>Ingredients</h3>
                     <div className="space-y-2">
+                        {/* Portions counter */}
+                        <div className="border border-gray-400 rounded p-4 flex items-center justify-between">
+                            <h3 className="font-medium text-lg">Portions</h3>
+                            <div className="flex items-center">
+                                <IconButton onClick={handleDecrement} disabled={portionCount === 1} size="small">
+                                    <RemoveIcon fontSize="inherit" />
+                                </IconButton>
+                                <span className="mx-2">{portionCount}</span>
+                                <IconButton onClick={handleIncrement} disabled={portionCount === 10} size="small">
+                                    <AddIcon fontSize="inherit" />
+                                </IconButton>
+                            </div>
+                        </div>
                         {cocktail.ingredients.map((ingredient, index) => (
                             <div key={index} className="border border-gray-400 rounded p-4 flex items-center">
                                 <span className="font-bold mr-2">{ingredient.amount}</span> of {ingredient.ingredient}
                             </div>
                         ))}
-                    </div>
-                    {/* Portions counter */}
-                    <div className="border border-gray-400 rounded p-4 flex items-center justify-between">
-                        <h3 className="font-medium text-lg">Portions</h3>
-                        <div className="flex items-center">
-                            <IconButton onClick={handleDecrement} disabled={portionCount === 1} size="small">
-                                <RemoveIcon fontSize="inherit" />
-                            </IconButton>
-                            <span className="mx-2">{portionCount}</span>
-                            <IconButton onClick={handleIncrement} disabled={portionCount === 10} size="small">
-                                <AddIcon fontSize="inherit" />
-                            </IconButton>
-                        </div>
                     </div>
                 </div>
 
