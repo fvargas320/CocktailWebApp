@@ -17,10 +17,6 @@ function App({signOut, user}) {
     return (
         <Router>
             <TopNavBar user = {user} signOut={signOut}/>
-            <div>
-                {user.attributes.email}
-                <button onClick={signOut}>Sign Out</button>
-            </div>
             <div style={{ marginTop: appBarHeight + 20 }}>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
@@ -29,7 +25,7 @@ function App({signOut, user}) {
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/view-all" element={<ViewAll />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/cocktail/:id" element={<CocktailCardView />} />
+                    <Route path="/cocktail/:id" element={<CocktailCardView user = {user} />} />
 
                 </Routes>
             </div>

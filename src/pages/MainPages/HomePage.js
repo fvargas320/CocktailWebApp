@@ -1,8 +1,8 @@
 import React from 'react';
-import Cocktail from "../CocktailPages/Cocktail";
+import Cocktail from "../../components/Cocktail/Cocktail";
 import cocktailData from "../../data/cocktail_list.json"; // Adjust the path if necessary
 
-const HomePage = () => {
+const HomePage = (props) => {
     return (
         <div>
             <h2 style={{ fontFamily: 'SFProRegular', color: "#000000", fontSize: "32px"}}>Popular Cocktails</h2>

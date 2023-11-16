@@ -8,10 +8,10 @@
     "ingredient_count": 4,
     "difficulty_level": "Easy",
     "ingredients": [
-      {"ingredient": "Tequila", "amount": "2 oz"},
-      {"ingredient": "Triple sec", "amount": "1 oz"},
-      {"ingredient": "Lime juice", "amount": "1 oz"},
-      {"ingredient": "Salt", "amount": "1/4 tsp"}
+      {"ingredient": "Tequila", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Triple sec", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Lime juice", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Salt", "amount": "1/4", "measurement": "tsp"}
     ],
     "preparation": [
       {"step": "Rim the glass with salt."},
@@ -37,10 +37,10 @@
     "ingredient_count": 4,
     "difficulty_level": "Medium",
     "ingredients": [
-      {"ingredient": "Bourbon or Rye whiskey", "amount": "2 oz"},
-      {"ingredient": "Angostura bitters", "amount": "2 dashes"},
-      {"ingredient": "Sugar cube", "amount": "1"},
-      {"ingredient": "Water", "amount": "Few dashes"}
+      {"ingredient": "Bourbon or Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"},
+      {"ingredient": "Sugar cube", "amount": "1", "measurement": "cube"},
+      {"ingredient": "Water", "amount": "3", "measurement": "dashes"}
     ],
     "preparation": [
       {"step": "Place sugar cube in glass and saturate with bitters, add water."},
@@ -66,11 +66,11 @@
     "ingredient_count": 5,
     "difficulty_level": "Easy",
     "ingredients": [
-      {"ingredient": "White Rum", "amount": "2 oz"},
-      {"ingredient": "Mint leaves", "amount": "3"},
-      {"ingredient": "Sugar", "amount": "2 tsp"},
-      {"ingredient": "Club soda", "amount": "3 oz"},
-      {"ingredient": "Lime juice", "amount": "1 oz"}
+      {"ingredient": "White Rum", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Mint leaves", "amount": "3", "measurement": "leaves"},
+      {"ingredient": "Sugar", "amount": "2", "measurement": "tsp"},
+      {"ingredient": "Club soda", "amount": "3", "measurement": "oz"},
+      {"ingredient": "Lime juice", "amount": "1", "measurement": "oz"}
     ],
     "preparation": [
       {"step": "Muddle mint with sugar and lime juice."},
@@ -96,10 +96,10 @@
     "ingredient_count": 4,
     "difficulty_level": "Easy",
     "ingredients": [
-      {"ingredient": "Vodka", "amount": "1.5 oz"},
-      {"ingredient": "Cranberry juice", "amount": "1 oz"},
-      {"ingredient": "Triple sec", "amount": "0.5 oz"},
-      {"ingredient": "Lime juice", "amount": "0.5 oz"}
+      {"ingredient": "Vodka", "amount": "1.5", "measurement": "oz"},
+      {"ingredient": "Cranberry juice", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Triple sec", "amount": "0.5", "measurement": "oz"},
+      {"ingredient": "Lime juice", "amount": "0.5", "measurement": "oz"}
     ],
     "preparation": [
       {"step": "Shake vodka, cranberry juice, triple sec, and lime juice with ice."},
@@ -124,9 +124,9 @@
     "ingredient_count": 3,
     "difficulty_level": "Medium",
     "ingredients": [
-      {"ingredient": "Rye whiskey", "amount": "2 oz"},
-      {"ingredient": "Sweet vermouth", "amount": "1 oz"},
-      {"ingredient": "Angostura bitters", "amount": "2 dashes"}
+      {"ingredient": "Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Sweet vermouth", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"}
     ],
     "preparation": [
       {"step": "Stir ingredients with ice in mixing glass."},

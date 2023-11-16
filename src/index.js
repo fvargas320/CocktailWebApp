@@ -10,6 +10,8 @@ import awsconfig from './aws-exports';
 
 import "@aws-amplify/ui-react/styles.css";
 import { studioTheme } from "./components/ui-components";
+import theme from "./theme";
+import {ThemeProvider} from "@mui/material";
 
 Amplify.configure(awsconfig);
 
@@ -17,8 +19,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <AmplifyProvider>
-      {/*<ThemeProvider theme={studioTheme}>*/}
+      <ThemeProvider theme={theme}>
     <App />
-      {/*</ThemeProvider>*/}
+      </ThemeProvider>
   </AmplifyProvider>
 );
