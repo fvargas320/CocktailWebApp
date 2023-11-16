@@ -49,9 +49,7 @@ const ReviewSection = (props) => {
                     <Button variant="outlined" size="small" sx={{ marginRight: '8px' }}>
                         See all reviews
                     </Button>
-                    {/*<Button variant="contained" size="small" color="primary" >*/}
                     {/*    Write a review*/}
-                    {/*</Button>*/}
                     <CreateReview addReview={addReviewToData} user={props.user} />
                 </Box>
             </Box>

@@ -7,20 +7,28 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
-import {styled} from "@mui/system";
+import { styled } from "@mui/system";
+import {IconButton} from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function CreateReview(props) {
     const [open, setOpen] = useState(false);
-    const [rating, setRating] = useState(0); // Initial rating state
+    const [rating, setRating] = useState(0);
     const [subject, setSubject] = useState('');
     const [reviewContent, setReviewContent] = useState('');
+
+    const resetForm = () => {
+        setRating(0);
+        setSubject('');
+        setReviewContent('');
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
-        console.log('Rating:', rating); // Log the rating when closing the dialog
+        resetForm();
         setOpen(false);
     };
 
@@ -29,15 +37,16 @@ export default function CreateReview(props) {
     };
 
     const handleCreateReview = () => {
-        // Pass the new review data up to the parent component
-        props.addReview({
-            reviewHeader: subject,
-            rating: rating,
-            userName: props.user, // Replace with user's name if available
-            reviewText: reviewContent,
-        });
-        // Close the dialog
-        handleClose();
+        if (rating > 0) {
+            props.addReview({
+                reviewHeader: subject,
+                rating: rating,
+                userName: props.user, // Replace with user's name if available
+                reviewText: reviewContent,
+            });
+            resetForm();
+            handleClose();
+        }
     };
 
     const StyledRating = styled(Rating)({
@@ -48,6 +57,7 @@ export default function CreateReview(props) {
             color: '#ff3d47',
         },
     });
+
     return (
         <React.Fragment>
             <Button variant="contained" onClick={handleClickOpen}>
@@ -55,9 +65,20 @@ export default function CreateReview(props) {
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Review</DialogTitle>
+                <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                    >
+                <CloseIcon fontSize="inherit" />
+                </IconButton>
                 <DialogContent>
                     <DialogContentText>
-                        {/*{props.user.attributes.name}*/}
                         Ready to rate your latest drink? 🌟🥂
                         <br />
                         <strong>Subject:</strong> Write a short review heading.
@@ -66,7 +87,7 @@ export default function CreateReview(props) {
                         <br />
                         <strong>Stars:</strong> Rate it from 1 (Meh) to 5 (Wowza) stars.
                     </DialogContentText>
-                    <h3>Rate This Cocktail</h3>
+                    <h3>Rate This Cocktail <span style={{color: 'red'}}>*</span></h3>
                     <StyledRating
                         name="simple-controlled"
                         value={rating}
@@ -92,16 +113,14 @@ export default function CreateReview(props) {
                         variant="standard"
                         multiline
                         rows={4}
-                        InputProps={{
-                            style: { overflow: 'auto' }
-                        }}
+                        InputProps={{ style: { overflow: 'auto' } }}
                         value={reviewContent}
                         onChange={(e) => setReviewContent(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleCreateReview}>Create</Button>
+                    <Button onClick={handleCreateReview} disabled={rating === 0}>Create</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>

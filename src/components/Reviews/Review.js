@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-
-const StyledReviewContainer = styled(Box)({
-    backgroundColor: '#d2d2d2',
-    padding: '16px',
-    borderRadius: '8px',
-    color: 'black',
-    maxWidth: '320px',
-    display: 'flex',
-    flexDirection: 'column',
-});
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -34,13 +24,31 @@ const StyledButton = styled(Button)({
 const Review = ({ reviewHeader, rating, userName, reviewText }) => {
     const [currentRating] = useState(rating);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [showSeeMore, setShowSeeMore] = useState(reviewText.length > 200);
+    const [showSeeMore, setShowSeeMore] = useState(false);
+
+    useEffect(() => {
+        setShowSeeMore(reviewText.length > 200);
+    }, [reviewText]);
 
     const previewText = reviewText.length > 200 ? reviewText.substring(0, 200) + '...' : reviewText;
 
     const handleToggleExpand = () => {
         setIsExpanded(!isExpanded);
     };
+    const StyledReviewContainer = styled(Box)({
+        backgroundColor: '#d2d2d2',
+        padding: '16px',
+        borderRadius: '8px',
+        color: 'black',
+        maxWidth: '320px',
+        minWidth: '320px',
+        display: 'flex',
+        flexDirection: 'column',
+        wordWrap: 'break-word',
+        overflow: 'hidden',
+        minHeight: '200px', // Set a minimum height, adjust as needed
+    });
+
 
     return (
         <StyledReviewContainer>

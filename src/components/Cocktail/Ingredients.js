@@ -39,7 +39,7 @@ function Ingredients({ ingredients }) {
         <div>
             <h3 className="font-medium text-lg " style={{ color: '#000000', fontFamily: 'SFProRegular', fontSize: "40px" }}>Ingredients</h3>
             <div className="space-y-2">
-                {/* Portions counter */}
+                {/* Portions */}
                 <div className="border border-gray-400 rounded p-4 flex items-center justify-between">
                     <h3 className="font-medium text-lg">Portions</h3>
                     <div className="flex items-center">
@@ -54,7 +54,7 @@ function Ingredients({ ingredients }) {
                 </div>
                 {modifiedIngredients.map((ingredient, index) => (
                     <div key={index} className="border border-gray-400 rounded p-4 flex justify-between items-center">
-                        <span className="font-bold mr-2">{ingredient.amount} {ingredient.measurement}</span> of {ingredient.ingredient}
+                        <span className="font-bold mr-2">{ingredient.amount} {ingredient.measurement}</span> {ingredient.ingredient}
                         <Checkbox
                             checked={checkedState[index]}
                             onChange={() => handleCheckboxChange(index)}
