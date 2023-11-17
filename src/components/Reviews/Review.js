@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -35,6 +35,7 @@ const Review = ({ reviewHeader, rating, userName, reviewText }) => {
     const handleToggleExpand = () => {
         setIsExpanded(!isExpanded);
     };
+
     const StyledReviewContainer = styled(Box)({
         backgroundColor: '#d2d2d2',
         padding: '16px',
@@ -49,29 +50,17 @@ const Review = ({ reviewHeader, rating, userName, reviewText }) => {
         minHeight: '200px', // Set a minimum height, adjust as needed
     });
 
-
     return (
         <StyledReviewContainer>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <Typography variant="subtitle1" gutterBottom>
                     {userName}
                 </Typography>
-                <StyledRating
-                    name="read-only"
-                    value={currentRating}
-                    readOnly
-                    size="small"
-                />
+                <StyledRating name="read-only" value={currentRating} readOnly size="small" />
             </Box>
-            <Typography
-                variant="h6"
-                component="h4"
-                gutterBottom
-                style={{ fontWeight: 'bold' }} // Make sure this is bold
-            >
+            <Typography variant="h6" component="h4" gutterBottom style={{ fontWeight: 'bold' }}>
                 {reviewHeader}
             </Typography>
-
             <Typography variant="body2" gutterBottom>
                 {isExpanded ? reviewText : previewText}
             </Typography>
