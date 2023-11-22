@@ -8,10 +8,10 @@
     "ingredient_count": 4,
     "difficulty_level": "Easy",
     "ingredients": [
-      {"ingredient": "Tequila", "amount": "2 oz"},
-      {"ingredient": "Triple sec", "amount": "1 oz"},
-      {"ingredient": "Lime juice", "amount": "1 oz"},
-      {"ingredient": "Salt", "amount": "1/4 tsp"}
+      {"ingredient": "Tequila", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Triple sec", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Lime juice", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Salt", "amount": "1/4", "measurement": "tsp"}
     ],
     "preparation": [
       {"step": "Rim the glass with salt."},
@@ -26,121 +26,21 @@
     "color": "Yellow",
     "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/classic-margarita.jpg?width=280,%20https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/classic-margarita.jpg?width=560",
     "garnish": ["Lime Wheel"],
-    "rim": "Salt"
-  },
-  {
-    "Cocktail_ID": 2,
-    "name": "Old Fashioned",
-    "categories": "Whiskey Cocktails",
-    "main_flavor": "Bitter",
-    "strength": "Strong",
-    "ingredient_count": 4,
-    "difficulty_level": "Medium",
-    "ingredients": [
-      {"ingredient": "Bourbon or Rye whiskey", "amount": "2 oz"},
-      {"ingredient": "Angostura bitters", "amount": "2 dashes"},
-      {"ingredient": "Sugar cube", "amount": "1"},
-      {"ingredient": "Water", "amount": "Few dashes"}
-    ],
-    "preparation": [
-      {"step": "Place sugar cube in glass and saturate with bitters, add water."},
-      {"step": "Muddle until dissolved."},
-      {"step": "Fill the glass with ice cubes and add whiskey."}
-    ],
-    "description": "The Old Fashioned weaves a tale of timelessness, its muddled sweetness and bitters creating an elegant tapestry with the boldness of whiskey.",
-    "alcohols": ["Bourbon or Rye whiskey"],
-    "mixers": ["Angostura bitters", "Water", "Sugar cube"],
-    "category": "Classic",
-    "detailed_flavors": ["Sweet", "Bitter", "Oaky"],
-    "color": "Amber",
-    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/old-fashioned.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/old-fashioned.jpg?width=560",
-    "garnish": ["Orange Twist"],
-    "rim": "None"
-  },
-  {
-    "Cocktail_ID": 3,
-    "name": "Mojito",
-    "categories": "Rum Cocktails",
-    "main_flavor": "Mint",
-    "strength": "Medium",
-    "ingredient_count": 5,
-    "difficulty_level": "Easy",
-    "ingredients": [
-      {"ingredient": "White Rum", "amount": "2 oz"},
-      {"ingredient": "Mint leaves", "amount": "3"},
-      {"ingredient": "Sugar", "amount": "2 tsp"},
-      {"ingredient": "Club soda", "amount": "3 oz"},
-      {"ingredient": "Lime juice", "amount": "1 oz"}
-    ],
-    "preparation": [
-      {"step": "Muddle mint with sugar and lime juice."},
-      {"step": "Add rum, top with ice and soda."},
-      {"step": "Stir gently."}
-    ],
-    "description": "The Mojito whispers of tropical breezes, with rum's warmth softened by mint's cool kiss, all wrapped in a sweet, fizzy embrace.",
-    "alcohols": ["White Rum"],
-    "mixers": ["Mint leaves", "Sugar", "Club soda", "Lime juice"],
-    "category": "Refreshing",
-    "detailed_flavors": ["Minty", "Sweet", "Citrus"],
-    "color": "Green",
-    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/classic-mojito.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/classic-mojito.jpg?width=560",
-    "garnish": ["Mint Sprig"],
-    "rim": "None"
-  },
-  {
-    "Cocktail_ID": 4,
-    "name": "Cosmopolitan",
-    "categories": "Vodka Cocktails",
-    "main_flavor": "Fruity",
-    "strength": "Medium",
-    "ingredient_count": 4,
-    "difficulty_level": "Easy",
-    "ingredients": [
-      {"ingredient": "Vodka", "amount": "1.5 oz"},
-      {"ingredient": "Cranberry juice", "amount": "1 oz"},
-      {"ingredient": "Triple sec", "amount": "0.5 oz"},
-      {"ingredient": "Lime juice", "amount": "0.5 oz"}
-    ],
-    "preparation": [
-      {"step": "Shake vodka, cranberry juice, triple sec, and lime juice with ice."},
-      {"step": "Strain into a chilled martini glass."}
-    ],
-    "description": "A cosmopolitan affair, this cocktail's vibrant hues and sharp flavors paint the town red with a sophistication that's as bold as it is tangy.",
-    "alcohols": ["Vodka"],
-    "mixers": ["Cranberry juice", "Triple sec", "Lime juice"],
-    "category": "Fruity",
-    "detailed_flavors": ["Tart", "Sweet", "Citrus"],
-    "color": "Pink",
-    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/wp-content/uploads/2018/02/harvey-wallbanger.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/wp-content/uploads/2018/02/harvey-wallbanger.jpg?width=560",
-    "garnish": ["Lime Twist"],
-    "rim": "None"
-  },
-  {
-    "Cocktail_ID": 5,
-    "name": "Manhattan",
-    "categories": "Whiskey Cocktails",
-    "main_flavor": "Bitter",
-    "strength": "Strong",
-    "ingredient_count": 3,
-    "difficulty_level": "Medium",
-    "ingredients": [
-      {"ingredient": "Rye whiskey", "amount": "2 oz"},
-      {"ingredient": "Sweet vermouth", "amount": "1 oz"},
-      {"ingredient": "Angostura bitters", "amount": "2 dashes"}
-    ],
-    "preparation": [
-      {"step": "Stir ingredients with ice in mixing glass."},
-      {"step": "Strain into chilled glass."},
-      {"step": "Garnish with a cherry."}
-    ],
-    "description": "A Manhattan stages a grand act in a martini glass, where whiskey and vermouth blend in a sultry duet, accented by a dash of bitters.",
-    "alcohols": ["Rye whiskey"],
-    "mixers": ["Sweet vermouth", "Angostura bitters"],
-    "category": "Classic",
-    "detailed_flavors": ["Sweet", "Bitter", "Herbal"],
-    "color": "Dark Red",
-    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
-    "garnish": ["Cherry"],
-    "rim": "None"
+    "rim": "Salt",
+    "reviews": [
+      {
+        "reviewHeader": "Just okay",
+        "rating": 3,
+        "userName": "Steve Brown",
+        "reviewText": "I expected a bit more coI expected a bit more coI expected a bit more coIt was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor."
+      },
+
+      {
+        "reviewHeader": "This is decent",
+        "rating": 3,
+        "userName": "props.user",
+        "reviewText": "It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor."
+      }
+    ]
   }
 ]
