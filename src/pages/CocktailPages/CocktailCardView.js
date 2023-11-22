@@ -1,10 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import cocktailData from "../../data/cocktail_list.json"; // Adjust the path if necessary
-import Checkbox from '@mui/material/Checkbox';
 import React, {useState} from "react";
-import {IconButton} from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import ReviewsSection from "../../components/Reviews/ReviewsSection";
 import Ingredients from "../../components/Cocktail/Ingredients";
 import CocktailButtons from "../../components/Cocktail/CocktailButtons";
@@ -58,7 +54,7 @@ function CocktailCardView(props, { onClose }) {
                 {/* Preparation steps are now a separate component */}
                 <Preparation steps={cocktail.preparation} />
             </div>
-            <ReviewsSection user = {props.user.attributes.name}/>
+            <ReviewsSection cocktail = {cocktail.Cocktail_ID} user = {props.user.attributes.name}/>
 
 
             {/* Close button */}

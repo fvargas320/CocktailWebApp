@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import Profile from "./pages/Settings/Profile";
 import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
 import {withAuthenticator} from "@aws-amplify/ui-react";
+import AllReviews from "./components/Reviews/AllReviews";
 
 function App({signOut, user}) {
     const theme = useTheme();
@@ -26,6 +27,8 @@ function App({signOut, user}) {
                     <Route path="/view-all" element={<ViewAll />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/cocktail/:id" element={<CocktailCardView user = {user} />} />
+                    <Route path="/all-reviews/:id" element={<AllReviews />} />
+
 
                 </Routes>
             </div>

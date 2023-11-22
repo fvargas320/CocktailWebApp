@@ -21,9 +21,8 @@ const StyledButton = styled(Button)({
     },
 });
 
-const Review = ({ reviewHeader, rating, userName, reviewText }) => {
+const Review = ({ reviewHeader, rating, userName, reviewText, isExpanded, onToggleExpand }) => {
     const [currentRating] = useState(rating);
-    const [isExpanded, setIsExpanded] = useState(false);
     const [showSeeMore, setShowSeeMore] = useState(false);
 
     useEffect(() => {
@@ -32,9 +31,6 @@ const Review = ({ reviewHeader, rating, userName, reviewText }) => {
 
     const previewText = reviewText.length > 200 ? reviewText.substring(0, 200) + '...' : reviewText;
 
-    const handleToggleExpand = () => {
-        setIsExpanded(!isExpanded);
-    };
     const StyledReviewContainer = styled(Box)({
         backgroundColor: '#d2d2d2',
         padding: '16px',
@@ -76,7 +72,7 @@ const Review = ({ reviewHeader, rating, userName, reviewText }) => {
                 {isExpanded ? reviewText : previewText}
             </Typography>
             {showSeeMore && (
-                <StyledButton onClick={handleToggleExpand}>
+                <StyledButton onClick={onToggleExpand}>
                     {isExpanded ? 'See Less' : 'See More'}
                 </StyledButton>
             )}
