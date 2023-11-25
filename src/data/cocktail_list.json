@@ -142,5 +142,145 @@
     "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
     "garnish": ["Cherry"],
     "rim": "None"
+  },
+  {
+    "Cocktail_ID": 6,
+    "name": "Manhattan",
+    "categories": "Whiskey Cocktails",
+    "main_flavor": "Bitter",
+    "strength": "Strong",
+    "ingredient_count": 3,
+    "difficulty_level": "Medium",
+    "ingredients": [
+      {"ingredient": "Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Sweet vermouth", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"}
+    ],
+    "preparation": [
+      {"step": "Stir ingredients with ice in mixing glass."},
+      {"step": "Strain into chilled glass."},
+      {"step": "Garnish with a cherry."}
+    ],
+    "description": "A Manhattan stages a grand act in a martini glass, where whiskey and vermouth blend in a sultry duet, accented by a dash of bitters.",
+    "alcohols": ["Rye whiskey"],
+    "mixers": ["Sweet vermouth", "Angostura bitters"],
+    "category": "Classic",
+    "detailed_flavors": ["Sweet", "Bitter", "Herbal"],
+    "color": "Dark Red",
+    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
+    "garnish": ["Cherry"],
+    "rim": "None"
+  },
+  {
+    "Cocktail_ID": 7,
+    "name": "Manhattan",
+    "categories": "Whiskey Cocktails",
+    "main_flavor": "Bitter",
+    "strength": "Strong",
+    "ingredient_count": 3,
+    "difficulty_level": "Medium",
+    "ingredients": [
+      {"ingredient": "Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Sweet vermouth", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"}
+    ],
+    "preparation": [
+      {"step": "Stir ingredients with ice in mixing glass."},
+      {"step": "Strain into chilled glass."},
+      {"step": "Garnish with a cherry."}
+    ],
+    "description": "A Manhattan stages a grand act in a martini glass, where whiskey and vermouth blend in a sultry duet, accented by a dash of bitters.",
+    "alcohols": ["Rye whiskey"],
+    "mixers": ["Sweet vermouth", "Angostura bitters"],
+    "category": "Classic",
+    "detailed_flavors": ["Sweet", "Bitter", "Herbal"],
+    "color": "Dark Red",
+    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
+    "garnish": ["Cherry"],
+    "rim": "None"
+  },
+  {
+    "Cocktail_ID": 8,
+    "name": "Manhattan",
+    "categories": "Whiskey Cocktails",
+    "main_flavor": "Bitter",
+    "strength": "Strong",
+    "ingredient_count": 3,
+    "difficulty_level": "Medium",
+    "ingredients": [
+      {"ingredient": "Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Sweet vermouth", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"}
+    ],
+    "preparation": [
+      {"step": "Stir ingredients with ice in mixing glass."},
+      {"step": "Strain into chilled glass."},
+      {"step": "Garnish with a cherry."}
+    ],
+    "description": "A Manhattan stages a grand act in a martini glass, where whiskey and vermouth blend in a sultry duet, accented by a dash of bitters.",
+    "alcohols": ["Rye whiskey"],
+    "mixers": ["Sweet vermouth", "Angostura bitters"],
+    "category": "Classic",
+    "detailed_flavors": ["Sweet", "Bitter", "Herbal"],
+    "color": "Dark Red",
+    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
+    "garnish": ["Cherry"],
+    "rim": "None"
+  },
+  {
+    "Cocktail_ID": 8,
+    "name": "Manhattan",
+    "categories": "Whiskey Cocktails",
+    "main_flavor": "Bitter",
+    "strength": "Strong",
+    "ingredient_count": 3,
+    "difficulty_level": "Medium",
+    "ingredients": [
+      {"ingredient": "Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Sweet vermouth", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"}
+    ],
+    "preparation": [
+      {"step": "Stir ingredients with ice in mixing glass."},
+      {"step": "Strain into chilled glass."},
+      {"step": "Garnish with a cherry."}
+    ],
+    "description": "A Manhattan stages a grand act in a martini glass, where whiskey and vermouth blend in a sultry duet, accented by a dash of bitters.",
+    "alcohols": ["Rye whiskey"],
+    "mixers": ["Sweet vermouth", "Angostura bitters"],
+    "category": "Classic",
+    "detailed_flavors": ["Sweet", "Bitter", "Herbal"],
+    "color": "Dark Red",
+    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
+    "garnish": ["Cherry"],
+    "rim": "None"
+  },
+  {
+    "Cocktail_ID": 8,
+    "name": "Manhattan",
+    "categories": "Whiskey Cocktails",
+    "main_flavor": "Bitter",
+    "strength": "Strong",
+    "ingredient_count": 3,
+    "difficulty_level": "Medium",
+    "ingredients": [
+      {"ingredient": "Rye whiskey", "amount": "2", "measurement": "oz"},
+      {"ingredient": "Sweet vermouth", "amount": "1", "measurement": "oz"},
+      {"ingredient": "Angostura bitters", "amount": "2", "measurement": "dashes"}
+    ],
+    "preparation": [
+      {"step": "Stir ingredients with ice in mixing glass."},
+      {"step": "Strain into chilled glass."},
+      {"step": "Garnish with a cherry."}
+    ],
+    "description": "A Manhattan stages a grand act in a martini glass, where whiskey and vermouth blend in a sultry duet, accented by a dash of bitters.",
+    "alcohols": ["Rye whiskey"],
+    "mixers": ["Sweet vermouth", "Angostura bitters"],
+    "category": "Classic",
+    "detailed_flavors": ["Sweet", "Bitter", "Herbal"],
+    "color": "Dark Red",
+    "image_url": "https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=280, https://cdn.tipsybartender.com/tipsybartender/jpg/recipe_img/manhattan.jpg?width=560",
+    "garnish": ["Cherry"],
+    "rim": "None"
   }
 ]
