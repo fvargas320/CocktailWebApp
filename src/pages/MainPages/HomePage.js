@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 import Cocktail from "../../components/Cocktail/Cocktail";
-import db from "../../firebase"; // Ensure this is the correct path to your firebase config
+import db from "../../firebase";
+import HomePageCategories from "../../components/Cocktail Collections/HomePageCategories"; // Ensure this is the correct path to your firebase config
 
 const HomePage = () => {
     const [firstCollection, setFirstCollection] = useState([]);
@@ -44,9 +45,10 @@ const HomePage = () => {
 
     return (
         <div>
-            {renderCocktails("Strawberry Cocktails & Recipes", firstCollection)}
-            {renderCocktails("Light & Skinny Cocktails", secondCollection)}
+            <HomePageCategories/>
             {renderCocktails("Quick & Easy Cocktails", thirdCollection)}
+            {renderCocktails("Light & Skinny Cocktails", secondCollection)}
+            {renderCocktails("Strawberry Cocktails & Recipes", firstCollection)}
         </div>
     );
 };

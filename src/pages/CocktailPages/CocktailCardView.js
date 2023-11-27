@@ -1,27 +1,42 @@
 import { useNavigate, useParams } from "react-router-dom";
-import cocktailData from "../../data/cocktail_list.json"; // Adjust the path if necessary
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import ReviewsSection from "../../components/Reviews/ReviewsSection";
 import Ingredients from "../../components/Cocktail/Ingredients";
 import CocktailButtons from "../../components/Cocktail/CocktailButtons";
 import Preparation from "../../components/Cocktail/Preparation";
-function CocktailCardView(props, { onClose }) {
+import { doc, getDoc } from 'firebase/firestore';
+import db from "../../firebase";
+
+function CocktailCardView(props) {
     let { id } = useParams();
     let navigate = useNavigate();
 
-    const cocktail = getCocktailById(id); // Fetch cocktail based on ID
-    console.log(cocktail);
-    const [checkedState, setCheckedState] = useState(new Array(cocktail.preparation.length).fill(false));
+    const [cocktail, setCocktail] = useState(null);
 
-    const handleCheckboxChange = (position) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-            index === position ? !item : item
-        );
-        setCheckedState(updatedCheckedState);
+    useEffect(() => {
+        const fetchCocktail = async () => {
+            const fetchedCocktail = await getCocktailById(id);
+            console.log(fetchedCocktail)
+            setCocktail(fetchedCocktail);
+        };
+
+        fetchCocktail();
+    }, [id]); // Dependency array with ID to fetch cocktail when ID changes
+
+    const getCocktailById = async (id) => {
+        const cocktailRef = doc(db, 'newCocktails', id);
+        const docSnapshot = await getDoc(cocktailRef);
+
+        if (docSnapshot.exists()) {
+            return docSnapshot.data();
+        } else {
+            console.log("No such document!");
+            return null;
+        }
     };
 
     if (!cocktail) {
-        return <div>Cocktail not found</div>;
+        return <div>Loading cocktail...</div>; // Display loading message or spinner
     }
 
     const handleClose = () => {
@@ -31,14 +46,15 @@ function CocktailCardView(props, { onClose }) {
 
 
 
+
     return (
         // Padding added to this div
         <div className="px-4 py-2 md:px-8">
             <div className="flex flex-col md:flex-row md:items-center">
-                <img className="h-80" src={cocktail.image_url} alt={`Cocktail ${cocktail.name}`} />
+                <img className="h-80" src={cocktail.Image_url} alt={`Cocktail ${cocktail.name}`} />
                 <div className="flex flex-col justify-center md:ml-4 flex-grow">
-                    <h2 className="text-6xl font-bold mt-4 md:mt-0">{cocktail.name}</h2>
-                    <p className="text-sm text-gray-500 my-2">{cocktail.description}</p>
+                    <h2 className="text-6xl font-bold mt-4 md:mt-0">{cocktail.Cocktail_Name}</h2>
+                    <p className="text-sm text-gray-500 my-2">{cocktail.Description}</p>
                 </div>
                 <div className="flex-none"> {/* This ensures that the buttons do not grow and have a fixed size */}
                     <CocktailButtons currentCocktail={cocktail} />
@@ -52,7 +68,7 @@ function CocktailCardView(props, { onClose }) {
                     ingredients={cocktail.ingredients}
                 />
                 {/* Preparation steps are now a separate component */}
-                <Preparation steps={cocktail.preparation} />
+                <Preparation steps={cocktail.Preparation} />
             </div>
             <ReviewsSection cocktail = {cocktail.Cocktail_ID} user = {props.user.attributes.name}/>
 
@@ -67,8 +83,6 @@ function CocktailCardView(props, { onClose }) {
     );
 }
 
-function getCocktailById(id) {
-    return cocktailData.find(cocktail => cocktail.Cocktail_ID === parseInt(id, 10));
-}
+
 
 export default CocktailCardView;
