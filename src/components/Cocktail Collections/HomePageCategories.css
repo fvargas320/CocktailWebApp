@@ -1,16 +1,19 @@
 .category-slider {
-    padding-top: 20px; /* Adjust the top padding as needed */
-    padding-bottom: 20px; /* Adjust the bottom padding as needed */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+
 }
 
 
 .slick-slide > div {
-    margin: 0 10px; /* Maintain horizontal space between slides */
+    margin: 0 10px;
 }
 
 .category-card {
     position: relative;
-    height: 250px; /* Increase the height as needed */
+    height: 250px;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -18,7 +21,6 @@
     align-items: flex-end;
     border-radius: 8px;
     overflow: hidden;
-    /* If you add margin for spacing, you may need to adjust width here */
 }
 
 .category-card h3 {

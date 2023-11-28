@@ -13,47 +13,30 @@ import spicyImage from '../../images/spicy.png';
 import champImage from '../../images/champ.png';
 import cocoImage from '../../images/coco.png';
 import strawberryImage from '../../images/strawberry.png';
+import {useNavigate} from "react-router-dom";
 
 const categories = [
-    { title: 'Christmas Cocktails', imageUrl: christmasImage },
-    { title: 'Champagne Cocktails', imageUrl: champImage },
-    { title: 'Strawberry Cocktails', imageUrl: strawberryImage },
-    { title: 'Coconut Cocktails', imageUrl: cocoImage },
-    { title: 'Summer Cocktails', imageUrl: summerImage },
-    { title: 'Blue Cocktails', imageUrl: ginImage },
-    { title: 'Spicy Cocktails', imageUrl: spicyImage },
-    { title: 'All Cocktails', imageUrl: allImage, large: true },
+        { title: 'Christmas Cocktails', imageUrl: christmasImage, firebaseCategory: 'Mixologist Approved' },
+        { title: 'Champagne Cocktails',  imageUrl: champImage, firebaseCategory: 'Champagne Cocktails' },
+        { title: 'Strawberry Cocktails', firebaseCategory: 'Strawberry Cocktails & Recipes', imageUrl: strawberryImage },
+        { title: 'Coconut Cocktails', imageUrl: cocoImage, firebaseCategory: 'Coconut Cocktails & Recipes' },
+        { title: 'Summer Cocktails', imageUrl: summerImage, firebaseCategory: 'Pool Party Drinks & Recipes' },
+        { title: 'Blue Cocktails', imageUrl: ginImage, firebaseCategory: 'Blue Drinks' },
+        { title: 'Spicy Cocktails', imageUrl: spicyImage, firebaseCategory: 'Spicy Recipes & Cocktails' },
+        { title: 'All Cocktails', imageUrl: allImage, large: true },
 
     // Add more categories as needed
 ];
 
-function NextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={`${className} custom-next-arrow`}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        />
-    );
-}
-
-function PrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={`${className} custom-prev-arrow`}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        />
-    );
-}
-
 const HomePageCategories = () => {
-    // Settings for the slider
+
+    let navigate = useNavigate();
+
+    const navigateToCollection = (collectionName) => {
+        navigate(`/all/categories/${collectionName}`);
+    };
+
     const settings = {
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
         dots: true,
         infinite: false,
         speed: 500,
@@ -91,7 +74,9 @@ const HomePageCategories = () => {
                             className="category-card"
                             style={{ backgroundImage: `url(${category.imageUrl})` }}
                         >
-                            <h3>{category.title}</h3>
+                            <h3 onClick={ () => navigateToCollection(category.firebaseCategory)}
+
+                            >{category.title}</h3>
                         </div>
                     </div>
                 ))}
