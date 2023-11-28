@@ -6,7 +6,7 @@ import HomePageCategories from "../../components/Cocktail Collections/HomePageCa
 import {useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {Link, Box, IconButton} from "@mui/material"; // Ensure this is the correct path to your firebase config
+import {Box} from "@mui/material";
 
 const HomePage = () => {
     const [firstCollection, setFirstCollection] = useState([]);
@@ -39,16 +39,15 @@ const HomePage = () => {
     const defaultColor = '#000000';
     const hoverColor = '#758bd2';
 
-    // Define the styles for the Button
     const buttonStyles = {
         fontFamily: 'SFProRegular',
         fontSize: '24px',
         fontWeight: 'bold',
-        transition: 'color 0.3s', // Smooth color transition on hover
-        textDecoration: 'none', // Remove underline
-        display: 'flex', // Make button content a flex container
-        alignItems: 'center', // Center content vertically
-        color: defaultColor, // Set the default color
+        transition: 'color 0.3s',
+        textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        color: defaultColor,
     };
 
     const renderCocktails = (title, collectionName, cocktails, isClickable = true) => (
@@ -59,12 +58,12 @@ const HomePage = () => {
                 style={buttonStyles}
                 onClick={isClickable ? () => navigateToCollection(collectionName) : undefined}
                 onMouseEnter={(e) => {
-                    e.currentTarget.style.color = hoverColor; // Change color on hover for the button
-                    e.currentTarget.querySelector('svg').style.fill = hoverColor; // Change color on hover for the icon
+                    e.currentTarget.style.color = hoverColor;
+                    e.currentTarget.querySelector('svg').style.fill = hoverColor;
                 }}
                 onMouseLeave={(e) => {
-                    e.currentTarget.style.color = defaultColor; // Restore original color for the button
-                    e.currentTarget.querySelector('svg').style.fill = defaultColor; // Restore original color for the icon
+                    e.currentTarget.style.color = defaultColor;
+                    e.currentTarget.querySelector('svg').style.fill = defaultColor;
                 }}
                 disableRipple // Disable the ripple effect
             >
@@ -80,7 +79,7 @@ const HomePage = () => {
                     justifyContent: 'center',
                     gap: 1, // 20px
 
-                    maxWidth: '1800px', // Set a maximum width
+                    maxWidth: '1800px',
                     margin: '0 auto', // Center the box in the container
                 }}
             >

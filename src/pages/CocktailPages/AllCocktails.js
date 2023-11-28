@@ -88,10 +88,10 @@ const AllCocktails = () => {
                 spacing={2}
                 justifyContent="center"
                 sx={{
-                    pt: 6, // Padding top
+                    pt: 6,
                     pb: 4,
-                    width: '100%', // Full width
-                    alignItems: 'center' // Center items horizontally
+                    width: '100%',
+                    alignItems: 'center'
                 }}
             >
                 <Pagination
