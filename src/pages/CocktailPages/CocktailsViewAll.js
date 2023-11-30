@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {collection, getDocs, query, where, orderBy, getDoc, doc} from "firebase/firestore";
 import db from "../../firebase";
-import Cocktail from "../../components/Cocktail/Cocktail";
+import CocktailCard from "../../components/Cocktail/CocktailCard";
 import { useParams } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Box from "@mui/material/Box";
 
-const AllCocktails = () => {
+const CocktailsViewAll = () => {
     const { collection: encodedCollectionName } = useParams();
     const collectionName = decodeURIComponent(encodedCollectionName);
 
@@ -72,7 +72,7 @@ const AllCocktails = () => {
                 }}
             >
                 {cocktails.map((cocktail) => (
-                    <Cocktail
+                    <CocktailCard
                         key={cocktail.Cocktail_ID}
                         id={cocktail.Cocktail_ID}
                         image={cocktail.Image_url}
@@ -105,4 +105,4 @@ const AllCocktails = () => {
     );
 };
 
-export default AllCocktails;
+export default CocktailsViewAll;

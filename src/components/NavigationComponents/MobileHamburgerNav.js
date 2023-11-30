@@ -3,14 +3,21 @@ import { Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText } 
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router-dom";
 
-const NavDrawer = (props) => {
+const MobileHamburgerNav = (props) => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const navigate = useNavigate();
 
     const handleListItemClick = (page) => {
         setOpenDrawer(false);
         const path = page.toLowerCase().split(' ').join('-');
-        navigate('/' + path);
+
+        if (page === "Home") {
+            navigate('/');
+        }
+
+        else{
+            navigate('/' + path);
+        }
     };
 
     return (
@@ -31,4 +38,4 @@ const NavDrawer = (props) => {
     );
 };
 
-export default NavDrawer;
+export default MobileHamburgerNav;

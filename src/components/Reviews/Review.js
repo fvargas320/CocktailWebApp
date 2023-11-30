@@ -32,12 +32,11 @@ const Review = ({ reviewHeader, rating, userName, reviewText, isExpanded, onTogg
     const previewText = reviewText.length > 200 ? reviewText.substring(0, 200) + '...' : reviewText;
 
     const StyledReviewContainer = styled(Box)({
-        backgroundColor: '#d2d2d2',
+        backgroundColor: '#eeebeb',
         padding: '16px',
         borderRadius: '8px',
         color: 'black',
-        maxWidth: '320px',
-        minWidth: '320px',
+        width: '320px',
         display: 'flex',
         flexDirection: 'column',
         wordWrap: 'break-word',

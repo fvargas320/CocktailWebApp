@@ -14,6 +14,8 @@ import champImage from '../../images/champ.png';
 import cocoImage from '../../images/coco.png';
 import strawberryImage from '../../images/strawberry.png';
 import {useNavigate} from "react-router-dom";
+import Button from "@mui/material/Button";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const categories = [
         { title: 'Christmas Cocktails', imageUrl: christmasImage, firebaseCategory: 'Mixologist Approved' },
@@ -64,9 +66,47 @@ const HomePageCategories = () => {
         ]
     };
 
+    // Define the default and hover colors
+    const defaultColor = '#000000';
+    const hoverColor = '#758bd2';
+
+    const buttonStyles = {
+        fontFamily: 'SFProRegular',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        transition: 'color 0.3s',
+        textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        color: defaultColor,
+    };
+
+
+    const navigateToViewAll = () => {
+        navigate(`/all/categories/`);
+    };
+
+
     return (
         <div className="category-slider">
-            <h3 style={{ fontFamily: 'SFProRegular', color: "#000000", fontSize: "32px" }}>Top Categories</h3>
+            <Button
+                variant="text"
+                color="success"
+                style={buttonStyles}
+                onClick={ () => navigateToViewAll() }
+                onMouseEnter={(e) => {
+                    e.currentTarget.style.color = hoverColor;
+                    e.currentTarget.querySelector('svg').style.fill = hoverColor;
+                }}
+                onMouseLeave={(e) => {
+                    e.currentTarget.style.color = defaultColor;
+                    e.currentTarget.querySelector('svg').style.fill = defaultColor;
+                }}
+                disableRipple // Disable the ripple effect
+            >
+                Top Categories
+                <ChevronRightIcon fontSize="medium" />
+            </Button>
             <Slider {...settings}>
                 {categories.map((category, index) => (
                     <div key={index}>

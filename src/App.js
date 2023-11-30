@@ -1,16 +1,17 @@
 import './index.css';
 import TopNavBar from "./components/NavigationComponents/TopNavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/MainPages/HomePage";
-import Discover from "./pages/MainPages/Discover";
-import Favorites from "./pages/MainPages/Favorites";
-import ViewAll from "./pages/MainPages/ViewAll";
+import HomePage from "./pages/NavigationPages/HomePage";
+import Discover from "./pages/NavigationPages/Discover";
+import Favorites from "./pages/NavigationPages/Favorites";
+import ViewAll from "./pages/NavigationPages/ViewAll";
 import { useTheme } from '@mui/material/styles';
 import Profile from "./pages/Settings/Profile";
 import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
 import {withAuthenticator} from "@aws-amplify/ui-react";
 import AllReviews from "./components/Reviews/AllReviews";
-import AllCocktails from "./pages/CocktailPages/AllCocktails";
+import CocktailsViewAll from "./pages/CocktailPages/CocktailsViewAll";
+import ViewAllCategories from "./components/Cocktail Collections/ViewAllCategories";
 
 function App({signOut, user}) {
     const theme = useTheme();
@@ -29,8 +30,9 @@ function App({signOut, user}) {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/cocktail/:id" element={<CocktailCardView user = {user} />} />
                     <Route path="/all-reviews/:id" element={<AllReviews />} />
-                    <Route path="/all/categories/:collection" element={<AllCocktails/>} />
-                    <Route path="/all" exact element={<AllCocktails/>} />
+                    <Route path="/all/categories" element={<ViewAllCategories/>} />
+                    <Route path="/all/categories/:collection" element={<CocktailsViewAll/>} />
+                    <Route path="/all" exact element={<CocktailsViewAll/>} />
 
                 </Routes>
             </div>

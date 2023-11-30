@@ -1,15 +1,25 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import ReviewsSection from "../../components/Reviews/ReviewsSection";
 import Ingredients from "../../components/Cocktail/Ingredients";
 import CocktailButtons from "../../components/Cocktail/CocktailButtons";
 import Preparation from "../../components/Cocktail/Preparation";
 import { doc, getDoc } from 'firebase/firestore';
 import db from "../../firebase";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 function CocktailCardView(props) {
     let { id } = useParams();
     let navigate = useNavigate();
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
 
     const [cocktail, setCocktail] = useState(null);
 
@@ -51,12 +61,12 @@ function CocktailCardView(props) {
         // Padding added to this div
         <div className="px-4 py-2 md:px-8">
             <div className="flex flex-col md:flex-row md:items-center">
-                <img className="h-80" src={cocktail.Image_url} alt={`Cocktail ${cocktail.name}`} />
+                <img className="h-96" src={cocktail.Image_url} alt={`Cocktail ${cocktail.name}`} />
                 <div className="flex flex-col justify-center md:ml-4 flex-grow">
                     <h2 className="text-6xl font-bold mt-4 md:mt-0">{cocktail.Cocktail_Name}</h2>
                     <p className="text-sm text-gray-500 my-2">{cocktail.Description}</p>
                 </div>
-                <div className="flex-none"> {/* This ensures that the buttons do not grow and have a fixed size */}
+                <div className="flex-none">
                     <CocktailButtons currentCocktail={cocktail} />
                 </div>
             </div>
@@ -70,8 +80,22 @@ function CocktailCardView(props) {
                 {/* Preparation steps are now a separate component */}
                 <Preparation steps={cocktail.Preparation} />
             </div>
-            <ReviewsSection cocktail = {cocktail.Cocktail_ID} user = {props.user.attributes.name}/>
 
+
+            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                <Tabs value={value} onChange={handleChange} centered>
+                    <Tab label="Reviews" />
+                    <Tab label="Comments" />
+                </Tabs>
+                {value === 0 && (
+                    <ReviewsSection cocktail={cocktail.Cocktail_ID} user={props.user.attributes.name} />
+                )}
+
+                {value === 1 &&(
+                    <Typography sx={{ fontFamily: 'SFProRegular' , fontSize:'48px', fontWeight: 'bold'}}>
+                        Comments
+                    </Typography>                )}
+            </Box>
 
             {/* Close button */}
             <div className="mt-4">
