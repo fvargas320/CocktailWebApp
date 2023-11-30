@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import { Box, Tabs, Tab, Toolbar, Typography, MenuItem, Tooltip, IconButton, Avatar, Menu, useMediaQuery, useTheme } from "@mui/material";
-import NavDrawer from "./NavDrawer";
+import MobileHamburgerNav from "./MobileHamburgerNav";
 import { useNavigate } from "react-router-dom";
 
 const pages = ['Home', 'Discover','Favorites', 'View All'];
@@ -23,10 +23,19 @@ const TopNavBar = (props) => {
     const [value, setValue] = useState(0);
 
     const handleTabChange = (event, newValue) => {
+
         setValue(newValue);
         const page = pages[newValue];
         const path = formatPageToPath(page);
-        navigate('/' + path);
+
+
+        if (page === "Home") {
+            navigate('/');
+        }
+
+        else{
+            navigate('/' + path);
+        }
     };
 
     const handleSettingClick = (setting) => {
@@ -58,7 +67,8 @@ const TopNavBar = (props) => {
                 <Toolbar>
                     {isMatch ? (
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                            <NavDrawer pages={pages} />
+                            <MobileHamburgerNav pages={pages} />
+                            <h2>HI</h2>
                             <Typography sx={{ flexGrow: 1, textAlign: 'center', fontSize: "25px"}}>Drinkly</Typography>
                             <Box sx={{ flexGrow: 0 }}>
                                 <Tooltip title="Open settings">

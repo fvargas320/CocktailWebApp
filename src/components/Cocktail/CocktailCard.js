@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import Box from "@mui/material/Box";
 
-function Cocktail(props) {
+function CocktailCard(props) {
     let navigate = useNavigate();
     const navigateToCocktailCard = () => {
         navigate(`/cocktail/${props.id}`);
@@ -26,7 +26,7 @@ function Cocktail(props) {
     );
 }
 
-export default Cocktail;
+export default CocktailCard;
 
 
 

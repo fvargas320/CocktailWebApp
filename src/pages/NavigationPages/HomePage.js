@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, where, limit } from 'firebase/firestore';
-import Cocktail from "../../components/Cocktail/Cocktail";
+import CocktailCard from "../../components/Cocktail/CocktailCard";
 import db from "../../firebase";
 import HomePageCategories from "../../components/Cocktail Collections/HomePageCategories";
 import {useNavigate} from "react-router-dom";
@@ -34,7 +34,6 @@ const HomePage = () => {
         navigate(`/all/categories/${collectionName}`);
     };
 
-
     // Define the default and hover colors
     const defaultColor = '#000000';
     const hoverColor = '#758bd2';
@@ -50,13 +49,13 @@ const HomePage = () => {
         color: defaultColor,
     };
 
-    const renderCocktails = (title, collectionName, cocktails, isClickable = true) => (
+    const renderCocktails = (title, collectionName, cocktails) => (
         <>
             <Button
                 variant="text"
                 color="success"
                 style={buttonStyles}
-                onClick={isClickable ? () => navigateToCollection(collectionName) : undefined}
+                onClick={ () => navigateToCollection(collectionName)}
                 onMouseEnter={(e) => {
                     e.currentTarget.style.color = hoverColor;
                     e.currentTarget.querySelector('svg').style.fill = hoverColor;
@@ -106,7 +105,7 @@ const HomePage = () => {
                 }}
                     >
 
-                    <Cocktail
+                    <CocktailCard
                         id={cocktail.Cocktail_ID}
                         image={cocktail.Image_url}
                         key={cocktail.Cocktail_ID}

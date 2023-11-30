@@ -21,8 +21,6 @@ const ReviewSection = (props) => {
     const theme = useTheme();
     const navigate = useNavigate();
 
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-
     const [reviewsData, setReviewsData] = useState([
         {
             reviewHeader: 'Amazing Taste!',
@@ -158,7 +156,6 @@ const ReviewSection = (props) => {
             <Box alignItems="center" mb={5}>
                 <Slider {...settings}>
                     {reviewsData.map((review, index) => (
-                        <div>
                         <Review
                             key={index} // Add a key for each slide
                             reviewHeader={review.reviewHeader}
@@ -167,8 +164,10 @@ const ReviewSection = (props) => {
                             reviewText={review.reviewText}
                             isExpanded={review.isExpanded}
                             onToggleExpand={() => toggleReviewExpand(index)}
+                            style={{ display: 'flex', flexDirection: 'column',
+                            }} // Apply Flexbox styles directly
+
                         />
-                        </div>
                     ))}
                 </Slider>
             </Box>
