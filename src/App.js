@@ -8,7 +8,6 @@ import ViewAll from "./pages/NavigationPages/ViewAll";
 import { useTheme } from '@mui/material/styles';
 import Profile from "./pages/Settings/Profile";
 import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
-import {withAuthenticator} from "@aws-amplify/ui-react";
 import AllReviews from "./components/Reviews/AllReviews";
 import CocktailsViewAll from "./pages/CocktailPages/CocktailsViewAll";
 import ViewAllCategories from "./components/Cocktail Collections/ViewAllCategories";
@@ -41,4 +40,4 @@ function App({signOut, user}) {
 }
 
 
-export default withAuthenticator(App);
+export default App;
