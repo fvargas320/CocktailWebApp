@@ -10,7 +10,7 @@ import {db, storage} from '../../firebase';
 import { ref, list, listAll, getDownloadURL } from "firebase/storage"
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -23,7 +23,7 @@ const usersRef = collection(db, "users");
 
 const Profile = () => {
     const [user, setUser] = useState(null)
-    const [profilePicURL, setProfilePicURL] = useState("")
+    const [profilePicURL, setProfilePicURL] = useState(null)
     const [selectedTab, setSelectedTab] = useState("publicProfile")
     const [alertInfo, setAlertInfo] = useState({type:"success", title:"Success", message:""})
     const [alert, setAlert] = useState(false)
@@ -55,6 +55,7 @@ const Profile = () => {
         if(filterUrl.length > 0){
             setProfilePicURL(filterUrl[0])
         }else{
+            setProfilePicURL("default")
             console.log("COULD NOT FIND Image URL!")
         }
     }
@@ -90,7 +91,7 @@ const Profile = () => {
                     </Box>
                 </Grid>
                 <Grid xs={6} md={10}>
-                    {user ? renderTab() : <div></div>}
+                    {user && profilePicURL ? renderTab() : <LinearProgress color='info'/>}
                 </Grid>
             </Grid>
         </Box>

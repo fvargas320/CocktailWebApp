@@ -67,7 +67,7 @@ const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAler
 
         try {
             await deleteObject(imageRef);
-            setProfilePicURL("")
+            setProfilePicURL("default")
             let result = {
                 type:"success", 
                 title:"Success", 
