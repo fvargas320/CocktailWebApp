@@ -28,14 +28,16 @@ const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAler
                     "userName": userNameChange,
                 });
             });
-            const response = await fetch(profilePicURL);
-            const blob = await response.blob();
-            const newObjectRef = ref(storage, `/${userNameChange}.png`)
-            await uploadBytes(newObjectRef, blob);
-            const oldObjectRef = ref(storage, profilePicURL);
-            await deleteObject(oldObjectRef);
-            const newProfilePicURL = await getDownloadURL(newObjectRef);
-            setProfilePicURL(newProfilePicURL)
+            if(userNameChange != user.userName){
+                const response = await fetch(profilePicURL);
+                const blob = await response.blob();
+                const newObjectRef = ref(storage, `/${userNameChange}.png`)
+                await uploadBytes(newObjectRef, blob);
+                const oldObjectRef = ref(storage, profilePicURL);
+                await deleteObject(oldObjectRef);
+                const newProfilePicURL = await getDownloadURL(newObjectRef);
+                setProfilePicURL(newProfilePicURL)
+            }
             let result = {
                 type:"success", 
                 title:"Success", 
