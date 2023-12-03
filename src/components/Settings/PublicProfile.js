@@ -6,12 +6,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import {collection, getDocs, query, where, orderBy, getDoc, doc, updateDoc} from "firebase/firestore";
-import { ref, deleteObject, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, deleteObject, getDownloadURL, uploadBytes, getBlob } from 'firebase/storage';
 import { db, storage } from '../../firebase';
 
 
 const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAlertInfo}) => {
     const [userNameChange, setUserNameChange] = useState("")
+
+    useEffect(() => {
+        setUserNameChange(user.userName)
+    }, [user])
 
     async function updateProfileInfo(){
         const q = query(collection(db, "users"), where("userName", '==', user.userName));
@@ -23,19 +27,26 @@ const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAler
                 await updateDoc(docRef, {
                     "userName": userNameChange,
                 });
-            
-                let result = {
-                    type:"success", 
-                    title:"Success", 
-                    message: "Account info updated successfully.",
-                    display: true
-                }
-                setAlert(true)
-                setAlertInfo(result)
-                setTimeout(() => {
-                    setAlert(false)
-                }, 5000)
             });
+            const response = await fetch(profilePicURL);
+            const blob = await response.blob();
+            const newObjectRef = ref(storage, `/${userNameChange}.png`)
+            await uploadBytes(newObjectRef, blob);
+            const oldObjectRef = ref(storage, profilePicURL);
+            await deleteObject(oldObjectRef);
+            const newProfilePicURL = await getDownloadURL(newObjectRef);
+            setProfilePicURL(newProfilePicURL)
+            let result = {
+                type:"success", 
+                title:"Success", 
+                message: "Account info updated successfully.",
+                display: true
+            }
+            setAlert(true)
+            setAlertInfo(result)
+            setTimeout(() => {
+                setAlert(false)
+            }, 5000)
         } catch (error) {
             let result = {
                 type:"error", 
