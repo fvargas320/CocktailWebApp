@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { IconButton, Snackbar, Alert } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import {addToFavorites, isCocktailFavorite, removeFromFavorites} from "../../utils/FavoritesLogic";
 
 function CocktailButtons(props) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -10,16 +11,64 @@ function CocktailButtons(props) {
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
     const buttonRef = useRef(null); // Ref for the button to position the snackbar
 
+    // Use useEffect to check if the item is a favorite on page load
+    useEffect(() => {
+        // Implement logic to check if the item is a favorite
+        const userId = '1'; // Replace with the actual user ID
+        const cocktailId = props.currentCocktail.Cocktail_ID.toString();
+
+        // Example: You can use a function to check if it's a favorite
+        const checkIfFavorite = async () => {
+            // Replace with your logic to check if the cocktail is in the user's favorites
+            // For example, you can use a function from your FavoritesLogic module
+            const isFavorite = await isCocktailFavorite(userId, cocktailId);
+            console.log(isFavorite)
+
+            // Update the state based on whether it's a favorite or not
+            setIsFavorite(isFavorite);
+        };
+
+        // Call the function to check if it's a favorite
+        checkIfFavorite();
+    }, [props.currentCocktail]);
+
     const handleAddClick = () => {
         console.log(`Add button clicked for ${props.currentCocktail}`);
     };
 
     const handleFavoriteClick = () => {
-        setIsFavorite((prevIsFavorite) => {
-            const newFavoriteStatus = !prevIsFavorite;
+        setIsFavorite((isFavorite) => {
+            const newFavoriteStatus = !isFavorite;
             setSnackbarMessage(newFavoriteStatus ? 'Added to favorites' : 'Removed from favorites');
-            setSnackbarSeverity(newFavoriteStatus ? 'success' : 'error'); // Change severity based on action
             setSnackbarOpen(true);
+
+            const userId = '1';
+            const cocktailId = props.currentCocktail.Cocktail_ID.toString();
+
+            if (newFavoriteStatus) {
+                // If the user is marking it as a favorite, add it
+                addToFavorites(userId, cocktailId)
+                    .then(() => {
+                        console.log('Added to favorites successfully');
+                        // You can update the UI or state here if needed
+                    })
+                    .catch((error) => {
+                        console.error('Error adding to favorites:', error);
+                        // Handle the error, e.g., display an error message
+                    });
+            } else {
+                // If the user is removing it from favorites, remove it
+                removeFromFavorites(userId, cocktailId)
+                    .then(() => {
+                        console.log('Removed from favorites successfully');
+                        // You can update the UI or state here if needed
+                    })
+                    .catch((error) => {
+                        console.error('Error removing from favorites:', error);
+                        // Handle the error, e.g., display an error message
+                    });
+            }
+
             return newFavoriteStatus;
         });
     };

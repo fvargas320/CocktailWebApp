@@ -4,21 +4,17 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Review from './Review'; // Import the Review component
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import ReviewBars from "./ReviewBars";
 import CreateReview from "./CreateReview";
-import AllReviews from "./AllReviews";
 import cocktailData from "../../data/cocktail_list.json";
 import {useNavigate} from "react-router-dom";
-import {Link} from "@mui/material"; // Adjust the path if necessary
 import Slider from 'react-slick'; // Import Slider component from react-slick
 import 'slick-carousel/slick/slick.css'; // Import slick-carousel CSS
 import 'slick-carousel/slick/slick-theme.css'; // Import slick-carousel theme
 
 
 const ReviewSection = (props) => {
-    // Calculate the average rating from reviews data
-    const theme = useTheme();
+
     const navigate = useNavigate();
 
     const [reviewsData, setReviewsData] = useState([
