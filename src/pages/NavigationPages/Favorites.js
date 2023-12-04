@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import { doc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import db from '../../firebase';
 import Box from '@mui/material/Box';
@@ -6,54 +6,63 @@ import CocktailCard from '../../components/Cocktail/CocktailCard';
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
+import {Skeleton} from "@mui/material";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Button from "@mui/material/Button";
+import {removeFromFavorites} from "../../utils/FavoritesLogic";
+
 
 const Favorites = () => {
     const userId = '1'; // Replace with the actual user ID
     const userDocRef = useMemo(() => doc(db, 'users', userId), [userId]);
     const [favoriteCocktails, setFavoriteCocktails] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        // Fetch the user's document, including the favorites array
+    const fetchFavorites = useCallback(() => {
+        setIsLoading(true);
         getDoc(userDocRef)
             .then((docSnapshot) => {
                 if (docSnapshot.exists()) {
                     const userData = docSnapshot.data();
-                    const favoritesArray = userData.favorites; // This is your array of favorite cocktail IDs
-
-                    // Create an array of queries for each value in the favoritesArray
-                    const queries = favoritesArray.map((value) =>
-                        query(collection(db, 'newCocktails'), where('Cocktail_ID', '==', parseInt(value)))
-                    );
-
-                    // Execute all queries in parallel using Promise.all
-                    return Promise.all(queries.map((q) => getDocs(q)));
+                    const favoritesArray = userData.favorites;
+                    if (favoritesArray.length > 0) {
+                        const queryFavorites = query(
+                            collection(db, 'newCocktails'),
+                            where('Cocktail_ID', 'in', favoritesArray.map(value => parseInt(value)))
+                        );
+                        return getDocs(queryFavorites);
+                    } else {
+                        return [];
+                    }
                 } else {
-                    // Handle the case where the user document does not exist
-                    return [];
+                    throw new Error('User document does not exist');
                 }
             })
-            .then((querySnapshots) => {
-                const cocktails = [];
-                console.log(querySnapshots.length)
-
-                // Iterate through querySnapshots to access the matching documents
-                querySnapshots.forEach((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        // Access the matching document data
-                        const cocktailData = doc.data();
-                        cocktails.push(cocktailData);
-                        console.log('Matching Cocktail:', cocktailData);
-                        // Do something with the matching cocktail data here
-                    });
-                });
-
-                // Set the favoriteCocktails state with the fetched data
-                setFavoriteCocktails(cocktails);
+            .then((querySnapshot) => {
+                if (Array.isArray(querySnapshot)) {
+                    setFavoriteCocktails([]);
+                } else {
+                    const cocktails = querySnapshot.docs.map(doc => doc.data());
+                    setFavoriteCocktails(cocktails);
+                }
             })
             .catch((error) => {
                 console.error('Error querying Firestore:', error);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, [userDocRef]);
+
+    useEffect(() => {
+        fetchFavorites();
+    }, [fetchFavorites]);
+
+    const handleRemove = useCallback((userID, cocktailID) => {
+        removeFromFavorites(userID, cocktailID)
+            .then(fetchFavorites)
+            .catch(error => console.error('Error removing favorite:', error));
+    }, [fetchFavorites]);
 
 
     // Define the default and hover colors
@@ -90,21 +99,38 @@ const Favorites = () => {
                 sx={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    gap: 2, // 20px
+                    gap: 2,
                     justifyContent: 'center',
                 }}
             >
-                {favoriteCocktails.map((cocktail) => (
-                    <CocktailCard
-                        key={cocktail.Cocktail_ID}
-                        id={cocktail.Cocktail_ID}
-                        image={cocktail.Image_url}
-                        name={cocktail.Cocktail_Name}
-                        strength={cocktail.Strength}
-                        level={cocktail.Difficulty_Level}
-                        flavor={cocktail.Main_Flavor}
-                    />
-                ))}
+                {isLoading ? (
+                    Array.from(new Array(4)).map((_, index) => (
+                        <Skeleton key={index} animation="wave" variant="rectangular" width={250} height={300} />
+                    ))
+                ) : (
+                    favoriteCocktails.map((cocktail) => (
+
+                        <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
+                            <CocktailCard
+                                id={cocktail.Cocktail_ID}
+                                image={cocktail.Image_url}
+                                name={cocktail.Cocktail_Name}
+                                strength={cocktail.Strength}
+                                level={cocktail.Difficulty_Level}
+                                flavor={cocktail.Main_Flavor}
+                            />
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                startIcon={<DeleteForeverIcon />}
+                                onClick={() => handleRemove(userId, cocktail.Cocktail_ID.toString())}
+                                sx={{ position: 'absolute', top: 0, right: 0 }}
+                            >
+                                Delete
+                            </Button>
+                        </Box>
+                    ))
+                )}
             </Box>
 
             <Divider className="py-8" >

@@ -1,5 +1,6 @@
 // src/firebase/favorites.js
 import {arrayRemove, arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import db from "../firebase";
 
 
@@ -49,12 +50,16 @@ export const addToFavorites = async (userId, cocktailId) => {
 };
 export const removeFromFavorites = async (userId, cocktailId) => {
     try {
+
         const userDocRef = doc(db, 'users', userId);
 
         // Update the user's document to remove the cocktailId from the favorites array
         await updateDoc(userDocRef, {
             favorites: arrayRemove(cocktailId)
         });
+
+        console.log("Removed")
+
     } catch (error) {
         console.error('Error removing from favorites:', error);
         throw error; // rethrow the error for handling in the component

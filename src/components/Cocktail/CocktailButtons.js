@@ -3,6 +3,8 @@ import { IconButton, Snackbar, Alert } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {addToFavorites, isCocktailFavorite, removeFromFavorites} from "../../utils/FavoritesLogic";
+import {createList} from "../../utils/ListsLogic";
+import AddToListModal from "./AddToListModal";
 
 function CocktailButtons(props) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -10,13 +12,23 @@ function CocktailButtons(props) {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
     const buttonRef = useRef(null); // Ref for the button to position the snackbar
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const userId = '1'; // Replace with the actual user ID
+    const cocktailId = props.currentCocktail.Cocktail_ID.toString();
+
+    const handleAddClick = () => {
+        setIsModalOpen(true);
+        console.log("Clicked button")
+
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     // Use useEffect to check if the item is a favorite on page load
     useEffect(() => {
         // Implement logic to check if the item is a favorite
-        const userId = '1'; // Replace with the actual user ID
-        const cocktailId = props.currentCocktail.Cocktail_ID.toString();
-
         // Example: You can use a function to check if it's a favorite
         const checkIfFavorite = async () => {
             // Replace with your logic to check if the cocktail is in the user's favorites
@@ -32,9 +44,13 @@ function CocktailButtons(props) {
         checkIfFavorite();
     }, [props.currentCocktail]);
 
-    const handleAddClick = () => {
-        console.log(`Add button clicked for ${props.currentCocktail}`);
-    };
+    // const handleAddClick = async () => {
+    //
+    //     const listAdded = await createList("1", "NewList2", "Description");
+    //     console.log("Clicked button")
+    //     console.log(listAdded)
+    //     // console.log(`Add button clicked for ${props.currentCocktail}`);
+    // };
 
     const handleFavoriteClick = () => {
         setIsFavorite((isFavorite) => {
@@ -82,6 +98,8 @@ function CocktailButtons(props) {
             <IconButton onClick={handleAddClick} size="large">
                 <AddCircleIcon fontSize="inherit" />
             </IconButton>
+            <AddToListModal cocktailID = {cocktailId} isOpen={isModalOpen} onClose={handleCloseModal} />
+
             <IconButton onClick={handleFavoriteClick} size="large" color={isFavorite ? "secondary" : "default"}>
                 <FavoriteIcon fontSize="inherit" />
             </IconButton>
