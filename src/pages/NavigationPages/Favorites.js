@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import db from '../../firebase';
 import Box from '@mui/material/Box';
@@ -6,17 +6,29 @@ import CocktailCard from '../../components/Cocktail/CocktailCard';
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
-import {Skeleton} from "@mui/material";
+import { Skeleton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from "@mui/material/Button";
-import {removeFromFavorites} from "../../utils/FavoritesLogic";
+import theme from "../../theme";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
+import { removeFromFavorites } from "../../utils/FavoritesLogic";
+import { RemoveCocktailDialog } from "../../components/Lists/ListsDialogs&SkelatalList";
 
 const Favorites = () => {
     const userId = '1'; // Replace with the actual user ID
     const userDocRef = useMemo(() => doc(db, 'users', userId), [userId]);
     const [favoriteCocktails, setFavoriteCocktails] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [cocktailToRemove, setCocktailToRemove] = useState(null); // State to store cocktail to remove
+    const [removeCocktailDialogOpen, setRemoveCocktailDialogOpen] = useState(false); // State for remove cocktail confirmation dialog
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
+    // Access custom styles and colors from theme file
+    const defaultColor = theme.customStyles.defaultColor;
+    const supportTextColor = theme.customStyles.supportTextColor;
 
     const fetchFavorites = useCallback(() => {
         setIsLoading(true);
@@ -59,15 +71,32 @@ const Favorites = () => {
     }, [fetchFavorites]);
 
     const handleRemove = useCallback((userID, cocktailID) => {
-        removeFromFavorites(userID, cocktailID)
-            .then(fetchFavorites)
-            .catch(error => console.error('Error removing favorite:', error));
-    }, [fetchFavorites]);
+        setCocktailToRemove({ userID, cocktailID }); // Set the cocktail to remove
+        setRemoveCocktailDialogOpen(true); // Open the confirmation dialog
+    }, []);
+
+    const confirmRemoveCocktail = async () => {
+        try {
+            if (cocktailToRemove) {
+                await removeFromFavorites(
+                    cocktailToRemove.userID,
+                    cocktailToRemove.cocktailID.toString()
+                );
+                fetchFavorites(); // Refresh the favorites list after removal
+                handleOpenSnackbar("Cocktail removed successfully");
+            }
+            setRemoveCocktailDialogOpen(false); // Close the remove cocktail confirmation dialog
+        } catch (error) {
+            console.error('Error removing favorite:', error);
+        }
+    };
 
 
-    // Define the default and hover colors
-    const defaultColor = '#000000';
-    const supportTextColor = '#8A8A8D';
+    const handleOpenSnackbar = (message) => {
+        setSnackbarMessage(message);
+        setSnackbarOpen(true);
+    };
+
 
     return (
         <div>
@@ -80,12 +109,12 @@ const Favorites = () => {
                 }}
                 mb={2}
             >
-                <Typography sx={{ fontFamily: 'SFProRegular'}}>
+                <Typography sx={{ fontFamily: 'SFProRegular' }}>
                     <Box component="span" sx={{
                         fontSize: '30px',
                         fontWeight: 'bold',
-                        color: defaultColor}}
-                    >
+                        color: defaultColor
+                    }}>
                         {"Your Favorites"}
                     </Box>
                 </Typography>
@@ -93,7 +122,6 @@ const Favorites = () => {
                 <Typography sx={{ fontFamily: 'SFProRegular', color: supportTextColor, fontSize: '18px' }}>
                     {favoriteCocktails.length} Total Favorites
                 </Typography>
-
             </Box>
             <Box
                 sx={{
@@ -109,7 +137,6 @@ const Favorites = () => {
                     ))
                 ) : (
                     favoriteCocktails.map((cocktail) => (
-
                         <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
                             <CocktailCard
                                 id={cocktail.Cocktail_ID}
@@ -132,8 +159,28 @@ const Favorites = () => {
                     ))
                 )}
             </Box>
+            <RemoveCocktailDialog
+                open={removeCocktailDialogOpen}
+                onClose={() => setRemoveCocktailDialogOpen(false)}
+                onConfirmRemoveCocktail={confirmRemoveCocktail}
+                displayText={"Are you sure you want to remove this cocktail from favorites?\n"}
+            />
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000} // Adjust the duration as needed
+                onClose={() => setSnackbarOpen(false)}
+            >
+                <MuiAlert
+                    elevation={6}
+                    variant="filled"
+                    severity="success"
+                    onClose={() => setSnackbarOpen(false)}
+                >
+                    {snackbarMessage}
+                </MuiAlert>
+            </Snackbar>
 
-            <Divider className="py-8" >
+            <Divider className="py-8">
                 <Chip label="No More Favorites" />
             </Divider>
         </div>
