@@ -12,6 +12,9 @@ import {withAuthenticator} from "@aws-amplify/ui-react";
 import AllReviews from "./components/Reviews/AllReviews";
 import CocktailsViewAll from "./pages/CocktailPages/CocktailsViewAll";
 import ViewAllCategories from "./components/Cocktail Collections/ViewAllCategories";
+import SignIn from './pages/Authentication/SignIn';
+import SignUpPage from './pages/Authentication/SignUp';
+import SignInPage from './pages/Authentication/SignIn';
 
 function App({signOut, user}) {
     const theme = useTheme();
@@ -25,8 +28,10 @@ function App({signOut, user}) {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/discover" element={<Discover />} />
-                    <Route path="/favorites" element={<Favorites />} />
+                    <Route path="/favorites" element={<Favorites/>} />
                     <Route path="/view-all" element={<ViewAll />} />
+                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/signin" element={<SignInPage/>} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/cocktail/:id" element={<CocktailCardView user = {user} />} />
                     <Route path="/all-reviews/:id" element={<AllReviews />} />

@@ -4,26 +4,24 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const SignUpPage = () => {
+const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
-  const auth = getAuth();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
-  const handleSignUp = () => {
-    // Reset the error state
-    setError(null);
+  const handleSignIn = () => {
+    const auth = getAuth();
+    setError(null); // Reset the error state
 
-    createUserWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed up
+        // Signed in
         const user = userCredential.user;
-        console.log('User created:', user);
-
+        console.log("sign in");
+        console.log(user);
         // Redirect to the home page
         navigate('/home');
       })
@@ -31,15 +29,15 @@ const SignUpPage = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        if (errorCode === 'auth/email-already-in-use') {
+        if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
           // Update the error state with a custom error message
-          setError('Email is already in use. Please use a different email.');
+          setError('Invalid email or password. Please try again.');
         } else {
           // For other errors, use the default error message
           setError(errorMessage);
         }
 
-        console.error('Sign-up error:', errorCode, errorMessage);
+        console.error('Sign-in error:', errorCode, errorMessage);
       });
   };
 
@@ -47,17 +45,8 @@ const SignUpPage = () => {
     <Container component="main" maxWidth="xs">
       <div style={{ textAlign: 'center', marginTop: '64px' }}>
         <Typography variant="h4" component="h2" gutterBottom style={{ marginBottom: '16px', color: '#333' }}>
-          Sign Up
+          Sign In
         </Typography>
-        <TextField
-          label="Username"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={{ marginBottom: '12px' }}
-        />
         <TextField
           label="Email"
           variant="outlined"
@@ -87,15 +76,15 @@ const SignUpPage = () => {
           color="primary"
           size="large"
           fullWidth
-          onClick={handleSignUp}
+          onClick={handleSignIn}
           style={{ marginTop: '16px', marginBottom: '8px' }}
         >
-          Create Account
+          Sign In
         </Button>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
-          <Link to="/signin" style={{ textDecoration: 'none' }}>
+          <Link to="/signup" style={{ textDecoration: 'none' }}>
             <Button variant="text" color="primary">
-              Sign In
+              Sign Up
             </Button>
           </Link>
           <Link to="/forgot-password" style={{ textDecoration: 'none' }}>
@@ -109,4 +98,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default SignInPage;
