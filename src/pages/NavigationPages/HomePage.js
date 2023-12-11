@@ -7,11 +7,14 @@ import {useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Box} from "@mui/material";
+import theme from "../../theme";
+import {HomePageHelper, HomePageSkeletalList} from "../../components/Skeletal/HomePageHelper";
 
 const HomePage = () => {
     const [firstCollection, setFirstCollection] = useState([]);
     const [secondCollection, setSecondCollection] = useState([]);
     const [thirdCollection, setThirdCollection] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // Add this state
 
     useEffect(() => {
         const fetchCocktails = async (setQuery, category, resultsLimit) => {
@@ -21,6 +24,9 @@ const HomePage = () => {
             const querySnapshot = await getDocs(q);
             const fetchedCocktails = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setQuery(fetchedCocktails);
+
+            // Set isLoading to false when data is fetched
+            setIsLoading(false);
         };
 
         fetchCocktails(setFirstCollection, "Strawberry Cocktails & Recipes", 10);
@@ -28,15 +34,17 @@ const HomePage = () => {
         fetchCocktails(setThirdCollection, "Quick & Easy Cocktails", 10);
     }, []);
 
+
     let navigate = useNavigate();
+
+    // Access custom styles and colors
+    const defaultColor = theme.customStyles.defaultColor;
+    const hoverColor = theme.customStyles.hoverColor;
 
     const navigateToCollection = (collectionName) => {
         navigate(`/all/categories/${collectionName}`);
     };
 
-    // Define the default and hover colors
-    const defaultColor = '#000000';
-    const hoverColor = '#758bd2';
 
     const buttonStyles = {
         fontFamily: 'SFProRegular',
@@ -122,12 +130,19 @@ const HomePage = () => {
 
     return (
         <div>
-            <HomePageCategories/>
-            {renderCocktails("Quick & Easy Cocktails","Quick & Easy Cocktails", thirdCollection)}
-            {renderCocktails("Light & Skinny Cocktails","Light & Skinny", secondCollection)}
-            {renderCocktails("Strawberry Cocktails & Recipes", "Strawberry Cocktails & Recipes", firstCollection)}
+            <HomePageCategories />
+            {isLoading ? ( // Display SkeletalList when isLoading is true
+                <HomePageSkeletalList/>
+            ) : (
+                <>
+                    {renderCocktails("Quick & Easy Cocktails","Quick & Easy Cocktails", thirdCollection)}
+                    {renderCocktails("Light & Skinny Cocktails","Light & Skinny", secondCollection)}
+                    {renderCocktails("Strawberry Cocktails & Recipes", "Strawberry Cocktails & Recipes", firstCollection)}
+                </>
+            )}
         </div>
     );
+
 };
 
 export default HomePage;

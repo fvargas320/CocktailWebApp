@@ -1,6 +1,5 @@
 import React from 'react';
 import './HomePageCategories.css';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -14,15 +13,10 @@ import champImage from '../../images/champ.png';
 import cocoImage from '../../images/coco.png';
 import strawberryImage from '../../images/strawberry.png';
 import {useNavigate} from "react-router-dom";
-import Button from "@mui/material/Button";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import HomePageCategories from "./HomePageCategories";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
-import ReviewBars from "../Reviews/ReviewBars";
-
 
 const categories = [
     { title: 'Christmas Cocktails', imageUrl: christmasImage, firebaseCategory: 'Mixologist Approved' },

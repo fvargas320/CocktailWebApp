@@ -28,6 +28,8 @@ function CocktailCardView(props) {
             const fetchedCocktail = await getCocktailById(id);
             console.log(fetchedCocktail)
             setCocktail(fetchedCocktail);
+            console.log("Stuck in effect");
+
         };
 
         fetchCocktail();
@@ -38,6 +40,7 @@ function CocktailCardView(props) {
         const docSnapshot = await getDoc(cocktailRef);
 
         if (docSnapshot.exists()) {
+            console.log("stuck in function!");
             return docSnapshot.data();
         } else {
             console.log("No such document!");
@@ -88,7 +91,7 @@ function CocktailCardView(props) {
                     <Tab label="Comments" />
                 </Tabs>
                 {value === 0 && (
-                    <ReviewsSection cocktail={cocktail.Cocktail_ID} user={props.user.attributes.name} />
+                    <ReviewsSection cocktail={cocktail.Cocktail_ID} user={"props.user.attributes.name"} />
                 )}
 
                 {value === 1 &&(

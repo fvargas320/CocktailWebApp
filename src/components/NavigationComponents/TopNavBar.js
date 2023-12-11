@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { signOut } from 'firebase/auth';
 
-const pages = ['Home', 'Discover', 'Favorites', 'View All'];
-const settings = ['Profile', 'Favorites', 'Logout'];
+const pages = ['Home', 'Discover','Favorites','Lists', 'View All'];
+const settings = ['Profile', 'Favorites','Lists', 'Logout'];
 
 const TopNavBar = (props) => {
   const navigate = useNavigate();

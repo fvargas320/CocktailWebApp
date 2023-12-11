@@ -8,13 +8,14 @@ import ViewAll from "./pages/NavigationPages/ViewAll";
 import { useTheme } from '@mui/material/styles';
 import Profile from "./pages/Settings/Profile";
 import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
-import {withAuthenticator} from "@aws-amplify/ui-react";
 import AllReviews from "./components/Reviews/AllReviews";
 import CocktailsViewAll from "./pages/CocktailPages/CocktailsViewAll";
 import ViewAllCategories from "./components/Cocktail Collections/ViewAllCategories";
 import SignIn from './pages/Authentication/SignIn';
 import SignUpPage from './pages/Authentication/SignUp';
 import SignInPage from './pages/Authentication/SignIn';
+import Lists from "./pages/NavigationPages/ListsPage";
+import ListsViewCocktails from "./components/Lists/ListsViewCocktails";
 
 function App({signOut, user}) {
     const theme = useTheme();
@@ -28,7 +29,9 @@ function App({signOut, user}) {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/discover" element={<Discover />} />
-                    <Route path="/favorites" element={<Favorites/>} />
+                    <Route path="/favorites" element={<Favorites />} />
+                    <Route path="/lists" element={<Lists />} />
+                    <Route path="/lists/:listName" element={<ListsViewCocktails />} />
                     <Route path="/view-all" element={<ViewAll />} />
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/signin" element={<SignInPage/>} />
@@ -46,4 +49,4 @@ function App({signOut, user}) {
 }
 
 
-export default withAuthenticator(App);
+export default App;
