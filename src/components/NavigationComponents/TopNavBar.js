@@ -157,7 +157,7 @@ const TopNavBar = (props) => {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={props.user.attributes.name} src="/static/images/avatar/290.jpg">
+                    <Avatar alt={"props.user.attributes.name"} src="/static/images/avatar/290.jpg">
                       {userEmail}
                     </Avatar>
                   </IconButton>
