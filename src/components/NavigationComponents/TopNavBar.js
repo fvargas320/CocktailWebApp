@@ -155,13 +155,19 @@ const TopNavBar = (props) => {
                 ))}
               </Tabs>
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={"props.user.attributes.name"} src="/static/images/avatar/290.jpg">
-                      {userEmail}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
+              {isLoggedIn ? (
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Logged In" src="/static/images/avatar/290.jpg">
+                        {userEmail}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Button variant="outlined" size="small" sx={{ marginRight: '8px' }} onClick={() => navigate(`/signin`)}>
+                    Login
+                  </Button>
+                )}
                 <Menu
                   sx={{ mt: '45px' }}
                   id="menu-appbar"
