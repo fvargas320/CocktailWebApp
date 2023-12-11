@@ -4,13 +4,19 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'; 
 
 const SignInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); 
+  const [forgotPasswordDialogOpen, setForgotPasswordDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignIn = () => {
     const auth = getAuth();
@@ -20,7 +26,7 @@ const SignInPage = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log("sign in");
+        console.log('sign in');
         console.log(user);
         // Redirect to the home page
         navigate('/home');
@@ -39,6 +45,24 @@ const SignInPage = () => {
 
         console.error('Sign-in error:', errorCode, errorMessage);
       });
+  };
+
+  const handleForgotPasswordClick = () => {
+    setForgotPasswordDialogOpen(true);
+  };
+
+  const handleForgotPasswordClose = () => {
+    setForgotPasswordDialogOpen(false);
+  };
+
+  
+  const handleForgotPasswordSubmit = async () =>{
+    const auth = getAuth();
+    await sendPasswordResetEmail(auth, email);
+    console.log("Password reset email sent")
+    console.log('Reset password logic here for email:', email);
+    // Close the dialog after handling the logic
+    handleForgotPasswordClose();
   };
 
   return (
@@ -87,13 +111,37 @@ const SignInPage = () => {
               Sign Up
             </Button>
           </Link>
-          <Link to="/forgot-password" style={{ textDecoration: 'none' }}>
-            <Button variant="text" color="primary">
-              Forgot Password
-            </Button>
-          </Link>
+          <Button variant="text" color="primary" onClick={handleForgotPasswordClick}>
+            Forgot Password
+          </Button>
         </div>
       </div>
+
+      {/* Forgot Password Dialog */}
+      <Dialog open={forgotPasswordDialogOpen} onClose={handleForgotPasswordClose}>
+        <DialogTitle>Forgot Password</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Enter your email address below, and we'll send you a link to reset your password.
+          </DialogContentText>
+          <TextField
+            label="Email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleForgotPasswordClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleForgotPasswordSubmit} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

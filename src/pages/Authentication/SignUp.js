@@ -98,14 +98,10 @@ const SignUpPage = () => {
               Sign In
             </Button>
           </Link>
-          <Link to="/forgot-password" style={{ textDecoration: 'none' }}>
-            <Button variant="text" color="primary">
-              Forgot Password
-            </Button>
-          </Link>
         </div>
       </div>
     </Container>
+
   );
 };
 
