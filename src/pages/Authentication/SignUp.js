@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import db from "../../firebase";
 import Typography from '@mui/material/Typography';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, collection } from "firebase/firestore"; 
 
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
@@ -14,16 +16,43 @@ const SignUpPage = () => {
   const auth = getAuth();
   const navigate = useNavigate();
 
+  const createUserDocument = async (userId) => {
+
+// Create the user document
+await setDoc(doc(db, "users", userId), {
+  userID: userId,
+  favorites: []
+
+});
+
+// Create a reference to the "Lists" collection under the user document
+const listsCollectionRef = collection(db, "users", userId, "Lists");
+
+// Create a new document within the "Lists" collection (generating a new document ID)
+await setDoc(doc(listsCollectionRef), {
+  // Your fields here
+});
+
+}
+
   const handleSignUp = () => {
     // Reset the error state
     setError(null);
+    
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
         console.log('User created:', user);
+        console.log(user.uid)
+        console.log(user.displayName)
+        user.displayName = username;
 
+        createUserDocument(user.uid);
+
+        //user.uid
+        //CALL FUNCTION TO CREATEA DOCUMENT
         // Redirect to the home page
         navigate('/home');
       })

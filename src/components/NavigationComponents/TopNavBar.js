@@ -14,6 +14,7 @@ const TopNavBar = (props) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [userName, setuserName] = useState('');
 
   const auth = getAuth();
 
@@ -24,6 +25,7 @@ const TopNavBar = (props) => {
         // Extract the first letter of the user's email
         const email = user.email || '';
         setUserEmail(email.charAt(0).toUpperCase());
+        setuserName(user.displayName.charAt(0).toUpperCase())
       }
     });
 
@@ -104,7 +106,7 @@ const TopNavBar = (props) => {
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar alt="Logged In" src="/static/images/avatar/290.jpg">
-                        {userEmail}
+                        {userName}
                       </Avatar>
                     </IconButton>
                   </Tooltip>
@@ -159,7 +161,7 @@ const TopNavBar = (props) => {
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar alt="Logged In" src="/static/images/avatar/290.jpg">
-                        {userEmail}
+                        {userName}
                       </Avatar>
                     </IconButton>
                   </Tooltip>
