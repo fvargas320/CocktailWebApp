@@ -36,49 +36,42 @@ export async function getAllListsAndCocktails(userId) {
 // Function to check if a cocktail is a favorite for a specific user
 export const createList = async (userId, listName, listDescription) => {
     try {
-        const listDocRef = doc(db, 'users', userId, 'Lists', listName);
-        console.log(listDocRef + "HOOOO")
-        // Fetch the specific list document
+        const listDocRef = doc(collection(db, 'users', userId, 'Lists'), listName);
+
+        // Check if the list already exists
         const docSnapshot = await getDoc(listDocRef);
 
         if (docSnapshot.exists()) {
-            // The list already exists
-            console.log("That list already exists")
-            return false; // Or handle as needed
-        } else {
-            // Create a new list if it does not exist
-            await setDoc(listDocRef, { name: listName, description: listDescription, cocktailIDs: [] });
-            console.log("YESSSIR")
-            return true; // List created successfully
+            console.log("That list already exists");
+            return false;
         }
+
+        // Create a new list
+        await setDoc(listDocRef, { name: listName, description: listDescription, cocktailIDs: [] });
+        return true;
     } catch (error) {
         console.error('Error creating list:', error);
-        throw error; // Rethrow the error for handling in the calling code
+        throw error;
     }
 };
 
 export const getAllLists = async (userId) => {
     try {
-        // Define the collection reference for the specific user's Lists
         const listsCollectionRef = collection(db, 'users', userId, 'Lists');
-
-        // Fetch all documents from the Lists collection
         const querySnapshot = await getDocs(listsCollectionRef);
 
-        // Map through each document and extract the desired information
-        const lists = querySnapshot.docs.map(doc => {
-            const data = doc.data();
-            return {
-                name: data.name,
-                description: data.description
-            };
-        });
+        if (querySnapshot.empty) {
+            // Return an empty array if the collection does not exist or is empty
+            return [];
+        }
 
-        console.log(lists); // Log the list of names and descriptions
-        return lists; // Return the list of names and descriptions
+        return querySnapshot.docs.map(doc => ({
+            name: doc.data().name,
+            description: doc.data().description,
+        }));
     } catch (error) {
         console.error('Error fetching lists:', error);
-        throw error; // Rethrow the error for handling in the calling code
+        throw error;
     }
 };
 

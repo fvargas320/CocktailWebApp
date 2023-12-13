@@ -8,14 +8,17 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import { styled } from "@mui/system";
-import {IconButton} from "@mui/material";
+import {IconButton, Snackbar, Alert} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
 
 export default function CreateReview(props) {
+    const { currentUser } = useAuth(); // Use the currentUser from AuthContext
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [subject, setSubject] = useState('');
     const [reviewContent, setReviewContent] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const resetForm = () => {
         setRating(0);
@@ -24,12 +27,20 @@ export default function CreateReview(props) {
     };
 
     const handleClickOpen = () => {
+        if (!currentUser) {
+            setSnackbarOpen(true);
+            return;
+        }
         setOpen(true);
     };
 
     const handleClose = () => {
         resetForm();
         setOpen(false);
+    };
+
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
     };
 
     const handleRatingChange = (event, newValue) => {
@@ -41,7 +52,7 @@ export default function CreateReview(props) {
             props.addReview({
                 reviewHeader: subject,
                 rating: rating,
-                userName: props.user, // Replace with user's name if available
+                userName: currentUser ? currentUser.displayName : "Guest", // Replace with user's email if available
                 reviewText: reviewContent,
             });
             resetForm();
@@ -74,8 +85,8 @@ export default function CreateReview(props) {
                         top: 8,
                         color: (theme) => theme.palette.grey[500],
                     }}
-                    >
-                <CloseIcon fontSize="inherit" />
+                >
+                    <CloseIcon fontSize="inherit" />
                 </IconButton>
                 <DialogContent>
                     <DialogContentText>
@@ -123,6 +134,17 @@ export default function CreateReview(props) {
                     <Button onClick={handleCreateReview} disabled={rating === 0}>Create</Button>
                 </DialogActions>
             </Dialog>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="info" sx={{ width: '100%' }}>
+                    Please log in to write a review.
+                </Alert>
+            </Snackbar>
         </React.Fragment>
     );
 }
+
