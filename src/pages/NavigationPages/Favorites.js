@@ -15,9 +15,12 @@ import MuiAlert from "@mui/material/Alert";
 
 import { removeFromFavorites } from "../../utils/FavoritesLogic";
 import { RemoveCocktailDialog } from "../../components/Lists/ListsDialogs&SkelatalList";
+import {getAuth} from "firebase/auth";
 
 const Favorites = () => {
-    const userId = '1'; // Replace with the actual user ID
+
+    const auth = getAuth();
+    const userId = auth.currentUser.uid
     const userDocRef = useMemo(() => doc(db, 'users', userId), [userId]);
     const [favoriteCocktails, setFavoriteCocktails] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

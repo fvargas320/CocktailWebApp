@@ -25,7 +25,9 @@ const TopNavBar = (props) => {
         // Extract the first letter of the user's email
         const email = user.email || '';
         setUserEmail(email.charAt(0).toUpperCase());
-        setuserName(user.displayName.charAt(0).toUpperCase())
+        setuserName("NOT FOUND")
+
+        // setuserName(user.displayName.charAt(0).toUpperCase() || "NOT FOUND")
       }
     });
 

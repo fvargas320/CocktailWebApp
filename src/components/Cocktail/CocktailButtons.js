@@ -5,6 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import {addToFavorites, isCocktailFavorite, removeFromFavorites} from "../../utils/FavoritesLogic";
 import {createList} from "../../utils/ListsLogic";
 import AddToListModal from "./AddToListModal";
+import {getAuth} from "firebase/auth";
 
 function CocktailButtons(props) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -13,7 +14,9 @@ function CocktailButtons(props) {
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
     const buttonRef = useRef(null); // Ref for the button to position the snackbar
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const userId = '1'; // Replace with the actual user ID
+    const auth = getAuth();
+    const userId = auth.currentUser.uid
+    console.log(userId)
     const cocktailId = props.currentCocktail.Cocktail_ID.toString();
 
     const handleAddClick = () => {
@@ -44,21 +47,13 @@ function CocktailButtons(props) {
         checkIfFavorite();
     }, [props.currentCocktail]);
 
-    // const handleAddClick = async () => {
-    //
-    //     const listAdded = await createList("1", "NewList2", "Description");
-    //     console.log("Clicked button")
-    //     console.log(listAdded)
-    //     // console.log(`Add button clicked for ${props.currentCocktail}`);
-    // };
 
-    const handleFavoriteClick = () => {
+    const handleFavoriteClick = (userId) => {
         setIsFavorite((isFavorite) => {
             const newFavoriteStatus = !isFavorite;
             setSnackbarMessage(newFavoriteStatus ? 'Added to favorites' : 'Removed from favorites');
             setSnackbarOpen(true);
 
-            const userId = '1';
             const cocktailId = props.currentCocktail.Cocktail_ID.toString();
 
             if (newFavoriteStatus) {
@@ -100,7 +95,7 @@ function CocktailButtons(props) {
             </IconButton>
             <AddToListModal cocktailID = {cocktailId} isOpen={isModalOpen} onClose={handleCloseModal} />
 
-            <IconButton onClick={handleFavoriteClick} size="large" color={isFavorite ? "secondary" : "default"}>
+            <IconButton onClick={() => handleFavoriteClick(userId)} size="large" color={isFavorite ? "secondary" : "default"}>
                 <FavoriteIcon fontSize="inherit" />
             </IconButton>
             <Snackbar

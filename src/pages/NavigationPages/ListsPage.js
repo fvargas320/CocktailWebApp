@@ -18,6 +18,7 @@ import {
     SkeletalList
 } from '../../components/Lists/ListsDialogs&SkelatalList';
 import theme from "../../theme";
+import {getAuth} from "firebase/auth";
 
 function ListsPage() {
     const [lists, setLists] = useState([]);
@@ -32,8 +33,12 @@ function ListsPage() {
 
     const navigate = useNavigate();
 
+    const auth = getAuth();
+    const userId = auth.currentUser.uid
+    console.log(userId)
+
     useEffect(() => {
-        getAllListsAndCocktails("1")
+        getAllListsAndCocktails(userId)
             .then(data => {
                 setLists(data);
                 setIsLoading(false);
@@ -69,7 +74,7 @@ function ListsPage() {
 
     const confirmDeleteList = async () => {
         try {
-            const userId = "1";
+            
             await removeList(userId, listName);
             setLists((prevLists) => prevLists.filter((list) => list.name !== listName));
             console.log(`List "${listName}" deleted successfully.`);
@@ -82,7 +87,7 @@ function ListsPage() {
 
     const handleModifyList = async () => {
         try {
-            const userId = "1";
+            
             const isModified = await modifyList(userId, listToModify.name, listName, listDescription);
 
             if (isModified) {
@@ -112,7 +117,7 @@ function ListsPage() {
     const confirmRemoveCocktail = async () => {
         try {
             if (cocktailToRemove) {
-                const userId = "1";
+                
                 await removeCocktailFromList(userId, cocktailToRemove.listName, cocktailToRemove.cocktailId.toString());
                 setLists((prevLists) =>
                     prevLists.map((list) =>
