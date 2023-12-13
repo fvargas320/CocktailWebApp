@@ -11,6 +11,9 @@ import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
 import AllReviews from "./components/Reviews/AllReviews";
 import CocktailsViewAll from "./pages/CocktailPages/CocktailsViewAll";
 import ViewAllCategories from "./components/Cocktail Collections/ViewAllCategories";
+import SignIn from './pages/Authentication/SignIn';
+import SignUpPage from './pages/Authentication/SignUp';
+import SignInPage from './pages/Authentication/SignIn';
 import Lists from "./pages/NavigationPages/ListsPage";
 import ListsViewCocktails from "./components/Lists/ListsViewCocktails";
 
@@ -30,6 +33,8 @@ function App({signOut, user}) {
                     <Route path="/lists" element={<Lists />} />
                     <Route path="/lists/:listName" element={<ListsViewCocktails />} />
                     <Route path="/view-all" element={<ViewAll />} />
+                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/signin" element={<SignInPage/>} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/cocktail/:id" element={<CocktailCardView user = {user} />} />
                     <Route path="/all-reviews/:id" element={<AllReviews />} />
