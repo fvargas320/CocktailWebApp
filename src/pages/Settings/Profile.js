@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import LinearProgress from '@mui/material/LinearProgress';
 import AccountSettings from '../../components/Settings/AccountSettings';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,8 +22,8 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 const usersRef = collection(db, "users");
-
 const Profile = () => {
+    const auth = getAuth();
     const [user, setUser] = useState(null)
     const [profilePicURL, setProfilePicURL] = useState(null)
     const [selectedTab, setSelectedTab] = useState("publicProfile")
@@ -35,19 +36,11 @@ const Profile = () => {
     }, [])
 
     async function getUserByUN(){
-        const q = query(usersRef, where("userName", "==", "FernandoVargas"), orderBy("userName"));
-        const querySnapshot = await getDocs(q);
-        const user = querySnapshot.docs.map(doc => doc.data());
-
-        if(user.length > 0){
-            setUser(user[0])
-        }else{
-            alert("COULD NOT FIND USER!")
-        }
+        setUser(auth.currentUser)
     }
 
     async function getProfilePicture(){
-        const username = "FernandoVargas"
+        const username = auth.currentUser.displayName
         const storageRef = ref(storage, '/');
         const result = await listAll(storageRef);
         const urlPromises = result.items.map((imageRef) => getDownloadURL(imageRef));
@@ -71,7 +64,10 @@ const Profile = () => {
                 setAlertInfo={setAlertInfo}
             />;
         }else if(selectedTab == "accountsettings"){
-            return <AccountSettings/>;
+            return <AccountSettings
+                setAlert={setAlert} 
+                setAlertInfo={setAlertInfo}
+            />;
         }
     }
 

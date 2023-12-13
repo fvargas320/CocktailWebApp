@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
-import db from '../../firebase';
+import {db} from '../../firebase';
 import Box from '@mui/material/Box';
 import CocktailCard from '../../components/Cocktail/CocktailCard';
 import Divider from "@mui/material/Divider";

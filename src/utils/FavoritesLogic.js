@@ -1,7 +1,7 @@
 // src/firebase/favorites.js
 import {arrayRemove, arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import db from "../firebase";
+import {db} from "../firebase";
 
 
 // Function to check if a cocktail is a favorite for a specific user

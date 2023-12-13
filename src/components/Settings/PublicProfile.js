@@ -8,27 +8,27 @@ import TextField from '@mui/material/TextField';
 import {collection, getDocs, query, where, orderBy, getDoc, doc, updateDoc} from "firebase/firestore";
 import { ref, deleteObject, getDownloadURL, uploadBytes, getBlob } from 'firebase/storage';
 import { db, storage } from '../../firebase';
+import { updateProfile } from 'firebase/auth';
 
 
 const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAlertInfo}) => {
     const [userNameChange, setUserNameChange] = useState("")
 
     useEffect(() => {
-        setUserNameChange(user.userName)
+        setUserNameChange(user.displayName)
     }, [user])
 
     async function updateProfileInfo(){
-        const q = query(collection(db, "users"), where("userName", '==', user.userName));
 
         try {
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach(async (document) => {
-                const docRef = doc(db, "users", document.id);
-                await updateDoc(docRef, {
-                    "userName": userNameChange,
-                });
+            updateProfile(user, {
+                displayName: userNameChange,
+            }).then(() => {
+                console.log('Display name set successfully');
+            }).catch((error) => {
+                console.error('Error setting display name:', error.message);
             });
-            if(userNameChange != user.userName){
+            if(userNameChange != user.displayName){
                 const response = await fetch(profilePicURL);
                 const blob = await response.blob();
                 const newObjectRef = ref(storage, `/${userNameChange}.png`)
@@ -104,7 +104,7 @@ const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAler
         const file = e.target.files[0];
 
         if (file) {
-            const storageRef = ref(storage, `/${user.userName}.png`);
+            const storageRef = ref(storage, `/${user.displayName}.png`);
 
             try {
                 await uploadBytes(storageRef, file);
@@ -144,7 +144,7 @@ const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAler
             </Typography>
             <Box display={"flex"} gap={"16px"} marginTop={"16px"}>
                 <Avatar 
-                    alt={user.userName}
+                    alt={user.displayName}
                     src={profilePicURL}
                     sx={{width: 128, height: 128}}
                 />
@@ -184,7 +184,7 @@ const PublicProfile = ({user, profilePicURL, setProfilePicURL, setAlert, setAler
             <TextField
                 style={{margin: "28px 0px", width: "164px"}}
                 label="Username"
-                defaultValue={user.userName}
+                defaultValue={user.displayName}
                 onChange={(e) => setUserNameChange(e.target.value)}
             />
             <Button 

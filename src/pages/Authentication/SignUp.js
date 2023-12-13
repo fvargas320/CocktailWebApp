@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import db from "../../firebase";
+import {db} from "../../firebase";
 import Typography from '@mui/material/Typography';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, collection } from "firebase/firestore"; 
 
 const SignUpPage = () => {
