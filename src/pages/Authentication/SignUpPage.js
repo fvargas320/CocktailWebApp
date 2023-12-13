@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import db from "../../firebase";
 import Typography from '@mui/material/Typography';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, collection } from "firebase/firestore"; 
 
 const SignUpPage = () => {
@@ -25,37 +25,33 @@ await setDoc(doc(db, "users", userId), {
 
 });
 
-// Create a reference to the "Lists" collection under the user document
-const listsCollectionRef = collection(db, "users", userId, "Lists");
-
-// Create a new document within the "Lists" collection (generating a new document ID)
-await setDoc(doc(listsCollectionRef), {
-  // Your fields here
-});
+// // Create a reference to the "Lists" collection under the user document
+// const listsCollectionRef = collection(db, "users", userId, "Lists");
+//
+// // Create a new document within the "Lists" collection (generating a new document ID)
+// await setDoc(doc(listsCollectionRef), {
+//   // Your fields here
+// });
 
 }
 
   const handleSignUp = () => {
     // Reset the error state
     setError(null);
-    
+
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log('User created:', user);
-        console.log(user.uid)
-        console.log(user.displayName)
-        user.displayName = username;
+        .then(async (userCredential) => {
+          const user = userCredential.user;
 
-        createUserDocument(user.uid);
+          // Update the user's profile with the display name
+          await updateProfile(user, { displayName: username });
 
-        //user.uid
-        //CALL FUNCTION TO CREATEA DOCUMENT
-        // Redirect to the home page
-        navigate('/home');
-      })
+          await createUserDocument(user.uid);
+
+          console.log('User created:', user);
+          navigate('/home');
+        })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
