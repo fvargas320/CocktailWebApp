@@ -19,9 +19,9 @@ const ProfileSidebar = ({setSelectedTab}) => {
             </Box>
             <Box style={chipContainer}>
                 <Chip 
-                    label="Favorites" 
+                    label="Account Settings" 
                     variant="outlined" 
-                    onClick={() => setSelectedTab("favorites")}
+                    onClick={() => setSelectedTab("accountsettings")}
                     sx={chipStyle}
                 />
             </Box>

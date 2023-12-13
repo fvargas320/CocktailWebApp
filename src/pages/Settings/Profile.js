@@ -11,6 +11,7 @@ import { ref, list, listAll, getDownloadURL } from "firebase/storage"
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import LinearProgress from '@mui/material/LinearProgress';
+import AccountSettings from '../../components/Settings/AccountSettings';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -69,8 +70,8 @@ const Profile = () => {
                 setAlert={setAlert} 
                 setAlertInfo={setAlertInfo}
             />;
-        }else if(selectedTab == "favorites"){
-            return <Item>Favorites</Item>;
+        }else if(selectedTab == "accountsettings"){
+            return <AccountSettings/>;
         }
     }
 
