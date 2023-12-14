@@ -1,5 +1,4 @@
-// src/firebase/favorites.js
-import {arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, setDoc, deleteDoc, updateDoc} from "firebase/firestore";
+import {arrayUnion, collection, doc, getDoc, getDocs, setDoc, deleteDoc, updateDoc} from "firebase/firestore";
 import {db} from "../firebase";
 
 // Function to fetch the details of a single cocktail by ID

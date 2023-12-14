@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 import CocktailCard from "../../components/Cocktail/CocktailCard";
 import {db} from "../../firebase";
-import HomePageCategories from "../../components/Cocktail Collections/HomePageCategories";
+import HomePageCategories from "../Category Pages/HomePageCategories";
 import {useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Box} from "@mui/material";
 import theme from "../../theme";
-import {HomePageHelper, HomePageSkeletalList} from "../../components/Skeletal/HomePageHelper";
+import {HomePageSkeletalList} from "../../utils/HomePageSkeletalHelper";
 
 const HomePage = () => {
     const [firstCollection, setFirstCollection] = useState([]);

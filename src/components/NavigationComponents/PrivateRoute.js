@@ -7,7 +7,6 @@ function PrivateRoute({ element: Element, ...rest }) {
     const auth = getAuth();
     const [user, loading, error] = useAuthState(auth);
 
-    // Optionally handle loading and error states here
     if (loading) {
         return <div>Loading...</div>; // Or a loading spinner
     }

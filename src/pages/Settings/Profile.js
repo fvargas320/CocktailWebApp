@@ -1,27 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import ProfileSidebar from '../../components/Settings/ProfileSidebar';
 import PublicProfile from '../../components/Settings/PublicProfile';
-import {collection, getDocs, query, where, orderBy, getDoc, doc} from "firebase/firestore";
 import {db, storage} from '../../firebase';
 import { ref, list, listAll, getDownloadURL } from "firebase/storage"
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import LinearProgress from '@mui/material/LinearProgress';
 import AccountSettings from '../../components/Settings/AccountSettings';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-const usersRef = collection(db, "users");
+
 const Profile = () => {
     const auth = getAuth();
     const [user, setUser] = useState(null)

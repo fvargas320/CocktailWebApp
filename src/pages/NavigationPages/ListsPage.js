@@ -5,15 +5,14 @@ import Button from "@mui/material/Button";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useNavigate } from "react-router-dom";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from "@mui/material/IconButton";
 import CocktailCard from "../../components/Cocktail/CocktailCard";
-import Divider from "@mui/material/Divider";
-import Chip from "@mui/material/Chip";
 import {
     ModifyListDialog,
     RemoveCocktailDialog,
     DeleteListDialog,
     SkeletalList
-} from '../../components/Lists/ListsDialogs&SkelatalList';
+} from '../../utils/ListsDialogs&SkelatalList';
 import theme from "../../theme";
 import { getAllListsAndCocktails, modifyList, removeList, removeCocktailFromList } from "../../utils/ListsLogic";
 import { useAuth } from '../../contexts/AuthContext';
@@ -201,7 +200,7 @@ function ListsPage() {
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    color="secondary"
+                                    color="primary"
                                     onClick={() => handleDeleteList(list.name)}
                                     size="small"
                                 >
@@ -222,15 +221,20 @@ function ListsPage() {
                                         flavor={cocktail.Main_Flavor}
                                     />
 
-                                    <Button
-                                        variant="outlined"
+                                    <IconButton
                                         color="secondary"
-                                        startIcon={<DeleteForeverIcon />}
-                                        onClick={() => handleRemoveCocktail(list.name, cocktail.Cocktail_ID)}
-                                        sx={{ position: 'absolute', top: 0, right: 0 }}
+                                        onClick={() => handleRemoveCocktail(userId, cocktail.Cocktail_ID.toString())}
+                                        sx={{
+                                            position: 'absolute',
+                                            bottom: 10,
+                                            right: 10,
+                                            "&:hover": {
+                                                backgroundColor: "#e57373", // Specify the hover color
+                                            },
+                                        }}
                                     >
-                                        Remove
-                                    </Button>
+                                        <DeleteForeverIcon />
+                                    </IconButton>
                                 </Box>
                             ))}
                         </Box>
@@ -272,7 +276,6 @@ function ListsPage() {
             />
         </Box>
     );
-
 }
 
 export default ListsPage;
