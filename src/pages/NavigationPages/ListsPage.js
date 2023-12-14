@@ -6,14 +6,12 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useNavigate } from "react-router-dom";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CocktailCard from "../../components/Cocktail/CocktailCard";
-import Divider from "@mui/material/Divider";
-import Chip from "@mui/material/Chip";
 import {
     ModifyListDialog,
     RemoveCocktailDialog,
     DeleteListDialog,
     SkeletalList
-} from '../../components/Lists/ListsDialogs&SkelatalList';
+} from '../../utils/ListsDialogs&SkelatalList';
 import theme from "../../theme";
 import { getAllListsAndCocktails, modifyList, removeList, removeCocktailFromList } from "../../utils/ListsLogic";
 import { useAuth } from '../../contexts/AuthContext';

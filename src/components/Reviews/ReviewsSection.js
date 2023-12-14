@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Review from './Review'; // Import the Review component
 import ReviewBars from "./ReviewBars";
 import CreateReview from "./CreateReview";
-import cocktailData from "../../data/cocktail_list.json";
 import {useNavigate} from "react-router-dom";
 import Slider from 'react-slick'; // Import Slider component from react-slick
 import 'slick-carousel/slick/slick.css'; // Import slick-carousel CSS

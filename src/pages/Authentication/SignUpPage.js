@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import {db} from "../../firebase";
 import Typography from '@mui/material/Typography';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { doc, setDoc, collection } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
@@ -18,20 +18,12 @@ const SignUpPage = () => {
 
   const createUserDocument = async (userId) => {
 
-// Create the user document
-await setDoc(doc(db, "users", userId), {
-  userID: userId,
-  favorites: []
+    // Create the user document
+    await setDoc(doc(db, "users", userId), {
+      userID: userId,
+      favorites: []
 
-});
-
-// // Create a reference to the "Lists" collection under the user document
-// const listsCollectionRef = collection(db, "users", userId, "Lists");
-//
-// // Create a new document within the "Lists" collection (generating a new document ID)
-// await setDoc(doc(listsCollectionRef), {
-//   // Your fields here
-// });
+    });
 
 }
 

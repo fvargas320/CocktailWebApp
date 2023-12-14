@@ -3,9 +3,6 @@ import React from 'react';
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
 
-
-
-
 export function HomePageSkeletalList() {
     return (
         <>

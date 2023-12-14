@@ -9,10 +9,10 @@ import ReviewsSection from "../../components/Reviews/ReviewsSection";
 import Ingredients from "../../components/Cocktail/Ingredients";
 import CocktailButtons from "../../components/Cocktail/CocktailButtons";
 import Preparation from "../../components/Cocktail/Preparation";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import default_image from '../../images/missing.png'; // Import the default image
 
-function CocktailCardView(props) {
+function CocktailCardView() {
     const auth = getAuth()
     let { id } = useParams();
     let navigate = useNavigate();
