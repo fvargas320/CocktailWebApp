@@ -50,8 +50,8 @@ function Ingredients({ ingredients }) {
 
     return (
         <div>
-            <h3 className="font-medium text-lg " style={{ color: '#000000', fontFamily: 'SFProRegular', fontSize: "40px" }}>Ingredients</h3>
-            <div className="space-y-2">
+            <h3 className="font-medium text-2xl" style={{ color: '#000000', fontFamily: 'SFProRegular' }}>Ingredients</h3>
+            <div className="space-y-4 mt-4">
                 <div className="border border-gray-400 rounded p-4 flex items-center justify-between">
                     <h3 className="font-medium text-lg">Measurement Unit</h3>
                     <div className="flex items-center">

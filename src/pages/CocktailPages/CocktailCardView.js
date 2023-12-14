@@ -3,29 +3,28 @@ import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress"; // Import CircularProgress
-
+import CircularProgress from "@mui/material/CircularProgress";
 import ReviewsSection from "../../components/Reviews/ReviewsSection";
 import Ingredients from "../../components/Cocktail/Ingredients";
 import CocktailButtons from "../../components/Cocktail/CocktailButtons";
 import Preparation from "../../components/Cocktail/Preparation";
 import { getAuth } from "firebase/auth";
-import default_image from '../../images/missing.png'; // Import the default image
+import default_image from '../../images/missing.png';
 
 function CocktailCardView() {
-    const auth = getAuth()
+    const auth = getAuth();
     let { id } = useParams();
     let navigate = useNavigate();
 
     const [imageSrc, setImageSrc] = useState("");
-    const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchCocktail = async () => {
             const fetchedCocktail = await getCocktailById(id);
             setCocktail(fetchedCocktail);
             setImageSrc(fetchedCocktail?.Image_url || "");
-            setIsLoading(false); // Set isLoading to false when data is fetched
+            setIsLoading(false);
         };
 
         fetchCocktail();
@@ -49,14 +48,13 @@ function CocktailCardView() {
     };
 
     if (isLoading) {
-        // Display loading spinner while fetching data
         return (
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    minHeight: "80vh", // Adjust as needed
+                    minHeight: "80vh",
                 }}
             >
                 <CircularProgress color="primary" size={80} />
@@ -72,7 +70,7 @@ function CocktailCardView() {
         <div className="px-4 py-2 md:px-8">
             <div className="flex flex-col md:flex-row md:items-center">
                 <img
-                    className="h-96"
+                    className="h-500   md:h-96" // Adjust height on mobile and md (medium) screens
                     src={imageSrc}
                     alt={`Cocktail ${cocktail.Cocktail_Name}`}
                     onError={handleImageError}

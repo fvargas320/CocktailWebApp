@@ -60,18 +60,18 @@ const Review = ({ setReviewsData, cocktailID, allReviews, reviewData, reviewHead
         updateDoc(documentRef, {reviews: newArray})
     }
 
-    function handleDelete() {
-        // Filter out the review to be deleted
-        const updatedReviews = allReviews.filter(review => review.userName !== currentUser);
-    
-        // Update the state with the new reviews array
-        setReviewsData(updatedReviews);
-    
-        // Update the Firestore document with the new reviews array
-        const documentRef = doc(db, "newCocktails", `${cocktailID}`);
-        updateDoc(documentRef, { reviews: updatedReviews });
-    }
-    
+function handleDelete() {
+    // Filter out the review to be deleted
+    const updatedReviews = allReviews.filter(review => review.userName !== currentUser);
+
+    // Update the state with the new reviews array
+    setReviewsData(updatedReviews);
+
+    // Update the Firestore document with the new reviews array
+    const documentRef = doc(db, "newCocktails", `${cocktailID}`);
+    updateDoc(documentRef, { reviews: updatedReviews });
+}
+
 
     return (
         <StyledReviewContainer>
