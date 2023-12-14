@@ -128,8 +128,16 @@ function ListsPage() {
     };
 
     return (
-        <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            {/* Button to open the "Create a new List" modal */}
+        <Box sx={{ p: 4, display: 'flex', flexDirection: 'column'}}>
+            {/* Move the "Create a new List" button to the top of the page */}
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setAddToListModalOpen(true)}
+                sx={{ fontSize: '14px', fontWeight: 'bold', mb: 2 }}
+            >
+                Create a new List
+            </Button>
 
             {isLoading ? (
                 <SkeletalList />
@@ -140,11 +148,13 @@ function ListsPage() {
                             sx={{
                                 padding: '0 16px',
                                 display: 'flex',
+                                flexDirection: 'row',
                                 justifyContent: 'space-between',
-                                mb: 2
+                                mb: 2,
+                                flexWrap: 'wrap', // Allow content to wrap
                             }}
                         >
-                            <Box>
+                            <Box sx={{ flex: '1', minWidth: '50%' }}> {/* Adjust min-width to control the column layout */}
                                 <Button
                                     variant="text"
                                     color="success"
@@ -163,27 +173,35 @@ function ListsPage() {
                                     {list.name}
                                     <ChevronRightIcon fontSize="medium" />
                                 </Button>
-                                <Typography sx={{ fontFamily: 'SFProRegular', fontSize: '18px', color: supportTextColor }}>
-                                    {"Description: " + list.description}
+                                <Typography
+                                    sx={{
+                                        fontFamily: 'SFProRegular',
+                                        fontSize: '18px',
+                                        color: supportTextColor,
+                                        whiteSpace: 'pre-wrap', // Allow text to wrap
+                                        wordWrap: 'break-word', // Break long words
+                                    }}
+                                >
+                                    {"Description: " + (list.description.length > 30 ? list.description.substring(0, 30) + '...' : list.description)}
                                 </Typography>
                                 <Typography sx={{ fontFamily: 'SFProRegular', color: supportTextColor, fontSize: '18px' }}>
                                     {list.cocktails.length} Cocktails
                                 </Typography>
                             </Box>
 
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 8 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 8, flexDirection: 'row' }}>
                                 <Button
-                                    variant="outlined"
+                                    variant="contained"
                                     color="primary"
-                                    onClick={() => openDialog(list)} // Open the modify list dialog for editing
+                                    onClick={() => openDialog(list)}
                                     size="small"
-                                    sx={{ mr: 2 }}
+                                    sx={{ mr: 2 }} // Add margin to the right
                                 >
                                     Modify List
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    color="primary"
+                                    color="secondary"
                                     onClick={() => handleDeleteList(list.name)}
                                     size="small"
                                 >
@@ -192,9 +210,9 @@ function ListsPage() {
                             </Box>
                         </Box>
 
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                             {list.cocktails.map((cocktail) => (
-                                <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
+                                <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative', marginBottom: 2 }}>
                                     <CocktailCard
                                         id={cocktail.Cocktail_ID}
                                         image={cocktail.Image_url}
@@ -216,28 +234,11 @@ function ListsPage() {
                                 </Box>
                             ))}
                         </Box>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => setAddToListModalOpen(true)}
-                            sx={{ fontSize: '14px', fontWeight: 'bold', mb: 2 }}
-                        >
-                            Create a new List
-                        </Button>
                     </Box>
                 ))
             ) : (
                 <>
-
-                <h2>No Lists Yet</h2>
-                <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setAddToListModalOpen(true)}
-            sx={{ fontSize: '14px', fontWeight: 'bold', mb: 2 }}
-        >
-            Create a new List
-        </Button>
+                    <h2>No Lists Yet</h2>
                 </>
             )}
 
@@ -263,13 +264,15 @@ function ListsPage() {
                 listName={listName}
                 onConfirmDeleteList={confirmDeleteList}
             />
+
             <CreateListModal
                 isOpen={addToListModalOpen}
                 onClose={() => setAddToListModalOpen(false)}
-                cocktailID={null} // Pass the cocktail ID if needed
+                cocktailID={null}
             />
         </Box>
     );
+
 }
 
 export default ListsPage;
