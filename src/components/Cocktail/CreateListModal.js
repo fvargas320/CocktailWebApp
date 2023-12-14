@@ -21,6 +21,18 @@ const CreateListModal = ({ isOpen, onClose }) => {
             return;
         }
 
+        if (listName.length > 75) {
+            // Display a message for list names that exceed 75 characters
+            alert('List name must be 75 characters or less.');
+            return;
+        }
+
+        if (listDescription.length > 75) {
+            // Display a message for descriptions that exceed 75 characters
+            alert('List description must be 75 characters or less.');
+            return;
+        }
+
         const listAdded = await createList(userId, listName, listDescription);
         if (listAdded) {
             handleClose();

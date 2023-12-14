@@ -39,6 +39,18 @@ const AddToListModal = ({ cocktailID, isOpen, onClose }) => {
             return;
         }
 
+        if (listName.length > 75) {
+            // Display a message for list names that exceed 75 characters
+            alert('List name must be 75 characters or less.');
+            return;
+        }
+
+        if (listDescription.length > 75) {
+            // Display a message for descriptions that exceed 75 characters
+            alert('List description must be 75 characters or less.');
+            return;
+        }
+
         const listAdded = await createList(userId, listName, listDescription);
         if (listAdded) {
             // Optionally, fetch the lists again to update the UI
@@ -47,6 +59,8 @@ const AddToListModal = ({ cocktailID, isOpen, onClose }) => {
             handleClose();
         }
     };
+
+
 
 
     const handleAddCocktailsToList = async () => {
@@ -99,7 +113,9 @@ const AddToListModal = ({ cocktailID, isOpen, onClose }) => {
                     <>
                         <Typography variant="h6" sx={{ mb: 2 }}>
                             Your Lists:
-                        </Typography>                        <List sx={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
+                        </Typography>
+
+                        <List sx={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
                             {lists.map((list, index) => (
                                 <ListItem key={index} disablePadding secondaryAction={
                                     <Checkbox
@@ -110,7 +126,10 @@ const AddToListModal = ({ cocktailID, isOpen, onClose }) => {
                                     />
                                 }>
                                     <ListItemButton onClick={() => handleToggle(list)}>
-                                        <ListItemText primary={list.name} secondary={list.description} />
+                                        <ListItemText
+                                            primary={list.name.length > 25 ? list.name.substring(0, 25) + '...' : list.name}
+                                            secondary={list.description.length > 25 ? list.description.substring(0, 25) + '...' : list.description}
+                                        />
                                     </ListItemButton>
                                 </ListItem>
                             ))}
@@ -118,7 +137,7 @@ const AddToListModal = ({ cocktailID, isOpen, onClose }) => {
 
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
                             <Button variant="contained" color="primary" onClick={() => setShowInputFields(true)}>Create List</Button>
-                            <Button variant="contained" color="primary" onClick={handleAddCocktailsToList}>Add Cocktails</Button>
+                            <Button variant="contained" color="primary" onClick={handleAddCocktailsToList}>Add Cocktail</Button>
                         </Box>
                     </>
                 ) : (
