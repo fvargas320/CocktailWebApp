@@ -14,8 +14,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 import { removeFromFavorites } from "../../utils/FavoritesLogic";
-import { RemoveCocktailDialog } from "../../components/Lists/ListsDialogs&SkelatalList";
-import { getAuth } from "firebase/auth";
+import { RemoveCocktailDialog } from "../../utils/ListsDialogs&SkelatalList";
 import { useAuth } from "../../contexts/AuthContext";
 
 const Favorites = () => {

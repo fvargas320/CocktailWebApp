@@ -7,14 +7,14 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton"; // Import Skeleton from MUI
+import Skeleton from "@mui/material/Skeleton";
 
 const CocktailsViewAll = () => {
     const { collection: encodedCollectionName } = useParams();
     const collectionName = decodeURIComponent(encodedCollectionName);
 
-    const [cocktailIds, setCocktailIds] = useState([]); // Store all cocktail IDs
-    const [totalIDs, setTotalIDs] = useState(0); // Store all cocktail IDs
+    const [cocktailIds, setCocktailIds] = useState([]);
+    const [totalIDs, setTotalIDs] = useState(0);
     const [cocktails, setCocktails] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);

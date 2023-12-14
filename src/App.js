@@ -9,12 +9,12 @@ import Profile from "./pages/Settings/Profile";
 import CocktailCardView from "./pages/CocktailPages/CocktailCardView";
 import AllReviews from "./components/Reviews/AllReviews";
 import CocktailsViewAll from "./pages/CocktailPages/CocktailsViewAll";
-import ViewAllCategories from "./components/Cocktail Collections/ViewAllCategories";
+import ViewAllCategories from "./pages/Category Pages/ViewAllCategories";
 import SignUpPage from './pages/Authentication/SignUpPage';
 import SignInPage from './pages/Authentication/SignInPage';
 import Lists from "./pages/NavigationPages/ListsPage";
-import ListsViewCocktails from "./components/Lists/ListsViewCocktails";
-import PrivateRoute from "./components/PrivateRoute";
+import ListsViewCocktails from "./pages/CocktailPages/ListsViewCocktails";
+import PrivateRoute from "./components/NavigationComponents/PrivateRoute";
 
 function App({signOut}) {
 

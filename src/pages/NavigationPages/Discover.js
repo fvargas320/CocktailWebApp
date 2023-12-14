@@ -6,12 +6,10 @@ import {
     Pagination,
     useHits,
     RefinementList,
-    Configure // Import Configure component
 } from 'react-instantsearch';
 import CocktailCard from '../../components/Cocktail/CocktailCard';
 import Box from '@mui/material/Box';
 import 'instantsearch.css/themes/satellite.css';
-import Skeleton from "@mui/material/Skeleton"; // Import Skeleton from MUI
 
 const searchClient = algoliasearch(
     'JU5G9QN5IC',
@@ -19,7 +17,6 @@ const searchClient = algoliasearch(
 );
 
 const Discover = () => {
-    const [isLoading, setIsLoading] = useState(true);
 
     function StructuredResults() {
         const { hits } = useHits();

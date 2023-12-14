@@ -26,8 +26,6 @@ const categories = [
         { title: 'Blue Cocktails', imageUrl: ginImage, firebaseCategory: 'Blue Drinks' },
         { title: 'Spicy Cocktails', imageUrl: spicyImage, firebaseCategory: 'Spicy Recipes & Cocktails' },
         { title: 'All Cocktails', imageUrl: allImage, large: true },
-
-    // Add more categories as needed
 ];
 
 const HomePageCategories = () => {

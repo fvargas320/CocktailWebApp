@@ -1,6 +1,4 @@
-// src/firebase/favorites.js
 import {arrayRemove, arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {db} from "../firebase";
 
 
