@@ -11,6 +11,8 @@ import Slider from 'react-slick'; // Import Slider component from react-slick
 import 'slick-carousel/slick/slick.css'; // Import slick-carousel CSS
 import 'slick-carousel/slick/slick-theme.css';
 import {useAuth} from "../../contexts/AuthContext"; // Import slick-carousel theme
+import { doc, setDoc, collection, updateDoc } from "firebase/firestore"; 
+import {db} from "../../firebase";
 
 
 const ReviewSection = (props) => {
@@ -19,63 +21,11 @@ const ReviewSection = (props) => {
     const { currentUser } = useAuth(); // Use the currentUser from AuthContext
     const userName = currentUser ? currentUser.displayName : null;
 
-    const [reviewsData, setReviewsData] = useState([
-        {
-            reviewHeader: 'Amazing Taste!',
-            rating: 4,
-            userName: 'John Doe',
-            reviewText: 'I expect expected a bit more coI expected a bit more coctedI expected a bit more coI expected a bit more coI expected a bit more coI expected a bit more coI expected a bit more coI expected a bit more coI expected a bit more coI expected a bit more co a bit more coI absolutely loved this cocktail! The balance of flavors was perfect.'
-        },
-        {
-            reviewHeader: 'Just okay',
-            rating: 3,
-            userName: 'Steve Brown',
-            reviewText: 'I expected a bit more coI expected a bit more coI expected a bit more coIt was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-
-        {
-            reviewHeader: "This is decent",
-            rating: 3,
-            userName: userName,
-            reviewText: 'It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-        {
-            reviewHeader: "This is decent",
-            rating: 3,
-            userName: userName,
-            reviewText: 'It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-
-        {
-            reviewHeader: "This is decent",
-            rating: 3,
-            userName: userName,
-            reviewText: 'It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-        {
-            reviewHeader: "This is decent",
-            rating: 3,
-            userName: userName,
-            reviewText: 'It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-        {
-            reviewHeader: "This is decent",
-            rating: 3,
-            userName: userName,
-            reviewText: 'It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-        {
-            reviewHeader: "This is decent",
-            rating: 3,
-            userName: userName,
-            reviewText: 'It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.It was good,It was good, but I expected a bit more complexity in flavor. but I expected a bit more complexity in flavor.It was good, but I expected a bit more complexity in flavor.'
-        },
-
-    ]);
+    const [reviewsData, setReviewsData] = useState([]);
 
     useEffect(() => {
         // Find the cocktail by ID and set its reviews
-        const selectedCocktail = cocktailData.find(c => c.Cocktail_ID === props.cocktail.Cocktail_ID);
+        const selectedCocktail = props.cocktail
         if (selectedCocktail && selectedCocktail.reviews) {
             setReviewsData(selectedCocktail.reviews.map(review => ({ ...review, isExpanded: false })));
         }
@@ -83,7 +33,11 @@ const ReviewSection = (props) => {
     const averageRating = reviewsData.reduce((acc, review) => acc + review.rating, 0) / reviewsData.length;
 
     const addReviewToData = (newReview) => {
-        setReviewsData((prevReviews) => [newReview, ...prevReviews]);
+        let newArray = reviewsData.push(newReview)
+        newArray = [...reviewsData]
+        setReviewsData(newArray);
+        let documentRef = doc(db, "newCocktails", `${props.cocktail.Cocktail_ID}`)
+        updateDoc(documentRef, {reviews: newArray})
     };
     const toggleReviewExpand = (index) => {
         setReviewsData(currentReviews =>
@@ -153,20 +107,22 @@ const ReviewSection = (props) => {
 
             <Box alignItems="center" mb={5}>
                 <Slider {...settings}>
-                    {reviewsData.map((review, index) => (
-                        <Review
-                            key={index} // Add a key for each slide
-                            reviewHeader={review.reviewHeader}
-                            rating={review.rating}
-                            userName={review.userName}
-                            reviewText={review.reviewText}
-                            isExpanded={review.isExpanded}
-                            onToggleExpand={() => toggleReviewExpand(index)}
-                            style={{ display: 'flex', flexDirection: 'column',
-                            }} // Apply Flexbox styles directly
+                    {reviewsData.length > 0 ? 
+                        reviewsData.map((review, index) => (
+                            <Review
+                                key={index} // Add a key for each slide
+                                reviewHeader={review.reviewHeader}
+                                rating={review.rating}
+                                userName={review.userName}
+                                reviewText={review.reviewText}
+                                isExpanded={review.isExpanded}
+                                onToggleExpand={() => toggleReviewExpand(index)}
+                                style={{ display: 'flex', flexDirection: 'column',
+                                }} // Apply Flexbox styles directly
 
-                        />
-                    ))}
+                            />
+                        )) : <Typography variant='h3'>No Reviews</Typography>
+                    }
                 </Slider>
             </Box>
 

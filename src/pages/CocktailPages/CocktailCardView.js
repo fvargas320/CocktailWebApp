@@ -8,10 +8,11 @@ import Preparation from "../../components/Cocktail/Preparation";
 import { doc, getDoc } from 'firebase/firestore';
 import {db} from "../../firebase";
 import Box from "@mui/material/Box";
-
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import default_image from '../../images/missing.png'; // Import the default image
 
 function CocktailCardView(props) {
+    const auth = getAuth()
     let { id } = useParams();
     let navigate = useNavigate();
 
@@ -83,7 +84,7 @@ function CocktailCardView(props) {
             </div>
 
             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                <ReviewsSection cocktail={cocktail.Cocktail_ID} user={"props.user.attributes.name"} />
+                <ReviewsSection cocktail={cocktail} user={auth.currentUser?.displayName} />
             </Box>
 
             {/* Close button */}
