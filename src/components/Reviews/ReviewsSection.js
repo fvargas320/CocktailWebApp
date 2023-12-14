@@ -13,6 +13,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import {useAuth} from "../../contexts/AuthContext"; // Import slick-carousel theme
 import { doc, setDoc, collection, updateDoc } from "firebase/firestore"; 
 import {db} from "../../firebase";
+import {IconButton, Snackbar, Alert} from "@mui/material";
 
 
 const ReviewSection = (props) => {
@@ -20,7 +21,7 @@ const ReviewSection = (props) => {
     const navigate = useNavigate();
     const { currentUser } = useAuth(); // Use the currentUser from AuthContext
     const userName = currentUser ? currentUser.displayName : null;
-
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [reviewsData, setReviewsData] = useState([]);
 
     useEffect(() => {
@@ -32,12 +33,26 @@ const ReviewSection = (props) => {
     }, [props.cocktail.Cocktail_ID]);
     const averageRating = reviewsData.reduce((acc, review) => acc + review.rating, 0) / reviewsData.length;
 
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
+    };
+
     const addReviewToData = (newReview) => {
-        let newArray = reviewsData.push(newReview)
-        newArray = [...reviewsData]
-        setReviewsData(newArray);
-        let documentRef = doc(db, "newCocktails", `${props.cocktail.Cocktail_ID}`)
-        updateDoc(documentRef, {reviews: newArray})
+        let userReviewed = false;
+        reviewsData.map((review) => {
+            if(review.userName == userName){
+                userReviewed = true
+            }
+        })
+        if(!userReviewed){
+            let newArray = reviewsData.push(newReview)
+            newArray = [...reviewsData]
+            setReviewsData(newArray);
+            let documentRef = doc(db, "newCocktails", `${props.cocktail.Cocktail_ID}`)
+            updateDoc(documentRef, {reviews: newArray})
+        }else{
+            setSnackbarOpen(true)
+        }
     };
     const toggleReviewExpand = (index) => {
         setReviewsData(currentReviews =>
@@ -84,7 +99,7 @@ const ReviewSection = (props) => {
 
 
                     {/*    Write a review*/}
-                    <CreateReview addReview={addReviewToData} user={userName} />
+                    <CreateReview addReview={addReviewToData} user={userName} reviewData={reviewsData}/>
                 </Box>
             </Box>
             <Box sx= {{padding: '0 16px', // Standard-sized padding on left and right
@@ -111,9 +126,14 @@ const ReviewSection = (props) => {
                         reviewsData.map((review, index) => (
                             <Review
                                 key={index} // Add a key for each slide
+                                cocktailID={props.cocktail.Cocktail_ID}
                                 reviewHeader={review.reviewHeader}
+                                reviewData={review}
+                                allReviews={reviewsData}
+                                setReviewsData={setReviewsData}
                                 rating={review.rating}
                                 userName={review.userName}
+                                currentUser={userName}
                                 reviewText={review.reviewText}
                                 isExpanded={review.isExpanded}
                                 onToggleExpand={() => toggleReviewExpand(index)}
@@ -125,7 +145,16 @@ const ReviewSection = (props) => {
                     }
                 </Slider>
             </Box>
-
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="info" sx={{ width: '100%' }}>
+                    You have already posted a review on this cocktail.
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };

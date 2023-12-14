@@ -4,6 +4,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
+import EditReview from './EditReview';
+import { doc, setDoc, collection, updateDoc } from "firebase/firestore"; 
+import {db} from "../../firebase";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -21,7 +24,7 @@ const StyledButton = styled(Button)({
     },
 });
 
-const Review = ({ reviewHeader, rating, userName, reviewText, isExpanded, onToggleExpand }) => {
+const Review = ({ setReviewsData, cocktailID, allReviews, reviewData, reviewHeader, rating, userName, currentUser, reviewText, isExpanded, onToggleExpand }) => {
     const [currentRating] = useState(rating);
     const [showSeeMore, setShowSeeMore] = useState(false);
 
@@ -44,6 +47,18 @@ const Review = ({ reviewHeader, rating, userName, reviewText, isExpanded, onTogg
         minHeight: '200px', // Set a minimum height, adjust as needed
     });
 
+    function handleEdit(editedReview){
+        let bufArr = []
+        for(let i = 0; i < allReviews.length; i++){
+            if(allReviews[i].userName != currentUser){
+                bufArr.push(allReviews[i])
+            }
+        }
+        let newArray = [...bufArr, editedReview]
+        setReviewsData(newArray)
+        let documentRef = doc(db, "newCocktails", `${cocktailID}`)
+        updateDoc(documentRef, {reviews: newArray})
+    }
 
     return (
         <StyledReviewContainer>
@@ -75,6 +90,9 @@ const Review = ({ reviewHeader, rating, userName, reviewText, isExpanded, onTogg
                     {isExpanded ? 'See Less' : 'See More'}
                 </StyledButton>
             )}
+            {userName == currentUser ? 
+            <EditReview editReview={handleEdit} user={userName} reviewData={reviewData}/>
+            : <></>}
         </StyledReviewContainer>
     );
 };
