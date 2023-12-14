@@ -3,6 +3,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { FormControlLabel, IconButton, Radio, RadioGroup, Switch } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import Typography from "@mui/material/Typography";
 
 function Ingredients({ ingredients }) {
     const [portionCount, setPortionCount] = useState(1);
@@ -50,7 +51,7 @@ function Ingredients({ ingredients }) {
 
     return (
         <div>
-            <h3 className="font-medium text-2xl" style={{ color: '#000000', fontFamily: 'SFProRegular' }}>Ingredients</h3>
+            <Typography sx={{ fontFamily: 'SFProRegular', fontSize: '24px', fontWeight: 'bold', paddingTop:'1.5rem'}}> Ingredients </Typography>
             <div className="space-y-4 mt-4">
                 <div className="border border-gray-400 rounded p-4 flex items-center justify-between">
                     <h3 className="font-medium text-lg">Measurement Unit</h3>
@@ -79,7 +80,8 @@ function Ingredients({ ingredients }) {
                 </div>
                 {modifiedIngredients.map((ingredient, index) => (
                     <div key={index} className={`border border-gray-400 rounded p-4 flex justify-between items-center ${ingredient.isChecked ? 'line-through text-gray-400' : ''}`}>
-                        <span className="font-bold mr-2">{ingredient.amount} {ingredient.measurement}</span> {ingredient.ingredient}
+                        <span className="font-bold mr-2">{ingredient.amount} {ingredient.measurement}</span>
+                        <span className="text-lg font-semibold">{ingredient.ingredient}</span>
                         <Checkbox
                             checked={checkedState[index]}
                             onChange={() => handleCheckboxChange(index)}
@@ -91,6 +93,7 @@ function Ingredients({ ingredients }) {
                             }}
                         />
                     </div>
+
                 ))}
             </div>
         </div>

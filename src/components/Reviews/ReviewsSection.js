@@ -83,7 +83,7 @@ const ReviewSection = (props) => {
     };
 
     return (
-        <Box sx={{ marginBottom: '24px', padding: '0 16px', marginTop: '24px' }}>
+        <Box sx={{ marginBottom: '24px', marginTop: '24px' }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <Typography sx={{ fontFamily: 'SFProRegular', fontSize: '24px', fontWeight: 'bold' }}>
                     Reviews
@@ -135,7 +135,7 @@ const ReviewSection = (props) => {
                                 onToggleExpand={() => toggleReviewExpand(index)}
                                 style={{ display: 'flex', flexDirection: 'column', }}
                             />
-                        )) : <Typography variant='h3'>No Reviews</Typography>
+                        )) : (<Typography variant='h3' className="py-6">No Reviews</Typography>)
                     }
                 </Slider>
             </Box>
