@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import { styled } from "@mui/system";
-import {IconButton, Snackbar, Alert} from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function EditReview(props) {
-    const { currentUser } = useAuth(); // Use the currentUser from AuthContext
+    const { currentUser } = useAuth();
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState(props.reviewData.rating);
     const [subject, setSubject] = useState(props.reviewData.reviewHeader);
     const [reviewContent, setReviewContent] = useState(props.reviewData.reviewText);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
 
     const resetForm = () => {
         setRating(0);
@@ -52,13 +54,31 @@ export default function EditReview(props) {
             props.editReview({
                 reviewHeader: subject,
                 rating: rating,
-                userName: currentUser ? currentUser.displayName : "Guest", // Replace with user's email if available
+                userName: currentUser ? currentUser.displayName : "Guest",
                 reviewText: reviewContent,
                 isExpanded: false
             });
             resetForm();
             handleClose();
         }
+    };
+
+    const handleDeleteReview = () => {
+        if (currentUser) {
+            setDeleteConfirmationOpen(true);
+        }
+    };
+
+    const handleConfirmDelete = () => {
+        if (currentUser) {
+            props.deleteReview(props.reviewData.id); // Replace with actual delete function
+            handleClose();
+        }
+        setDeleteConfirmationOpen(false);
+    };
+
+    const handleCancelDelete = () => {
+        setDeleteConfirmationOpen(false);
     };
 
     const StyledRating = styled(Rating)({
@@ -70,11 +90,21 @@ export default function EditReview(props) {
         },
     });
 
+    const buttonStyle = {
+        width: '50%',
+        marginRight: '8px', // Add margin between buttons
+    };
+
     return (
         <React.Fragment>
-            <Button variant="contained" onClick={handleClickOpen}>
-                Edit Review
-            </Button>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Button variant="contained" onClick={handleClickOpen} style={buttonStyle}>
+                    Edit Review
+                </Button>
+                <Button variant="contained" onClick={handleDeleteReview} style={buttonStyle}>
+                    Delete
+                </Button>
+            </div>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit Review</DialogTitle>
                 <IconButton
@@ -90,7 +120,7 @@ export default function EditReview(props) {
                     <CloseIcon fontSize="inherit" />
                 </IconButton>
                 <DialogContent>
-                    <h3>Rate This Cocktail <span style={{color: 'red'}}>*</span></h3>
+                    <h3>Rate This Cocktail <span style={{ color: 'red' }}>*</span></h3>
                     <StyledRating
                         name="simple-controlled"
                         value={rating}
@@ -126,6 +156,22 @@ export default function EditReview(props) {
                     <Button onClick={handleCreateReview} disabled={rating === 0}>Create</Button>
                 </DialogActions>
             </Dialog>
+            <Dialog open={deleteConfirmationOpen} onClose={handleCancelDelete}>
+                <DialogTitle>Delete Review</DialogTitle>
+                <DialogContent>
+                    <Typography>
+                        Are you sure you want to delete this review?
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCancelDelete} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleConfirmDelete} color="primary">
+                        Confirm Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}
@@ -139,4 +185,3 @@ export default function EditReview(props) {
         </React.Fragment>
     );
 }
-
