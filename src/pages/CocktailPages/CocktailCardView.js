@@ -6,7 +6,7 @@ import Ingredients from "../../components/Cocktail/Ingredients";
 import CocktailButtons from "../../components/Cocktail/CocktailButtons";
 import Preparation from "../../components/Cocktail/Preparation";
 import { doc, getDoc } from 'firebase/firestore';
-import db from "../../firebase";
+import {db} from "../../firebase";
 import Box from "@mui/material/Box";
 
 import default_image from '../../images/missing.png'; // Import the default image

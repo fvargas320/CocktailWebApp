@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 import CocktailCard from "../../components/Cocktail/CocktailCard";
-import db from "../../firebase";
+import {db} from "../../firebase";
 import HomePageCategories from "../../components/Cocktail Collections/HomePageCategories";
 import {useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {collection, getDocs, query, where, orderBy, getDoc, doc} from "firebase/firestore";
-import db from "../../firebase";
+import {db} from "../../firebase";
 import CocktailCard from "../../components/Cocktail/CocktailCard";
 import { useParams } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
