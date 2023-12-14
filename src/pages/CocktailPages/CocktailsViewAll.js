@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const CocktailsViewAll = () => {
     const { collection: encodedCollectionName } = useParams();
@@ -59,10 +60,37 @@ const CocktailsViewAll = () => {
         setCurrentPage(value);
     };
 
+    // Define the default and hover colors
+    const defaultColor = '#000000';
+    const supportTextColor = '#8A8A8D';
+
     return (
         <div>
-            <h1>Currently Viewing: {collectionName}</h1>
-            <h1>Viewing 16 out of {totalIDs} cocktails </h1>
+            <Box
+                sx={{
+                    padding: '0 16px', // Standard-sized padding on left and right
+                    display: 'flex',
+                    justifyContent: 'space-between', // Align items on the left and right edges
+                    alignItems: 'center', // Vertically center items
+                }}
+                mb={2}
+            >
+            <Typography sx={{ fontFamily: 'SFProRegular'}}>
+                <Box component="span" sx={{
+                    fontSize: '30px',
+                    fontWeight: 'bold',
+                    color: defaultColor}}
+                >
+                   {collectionName}
+                </Box>
+            </Typography>
+
+            <Typography sx={{ fontFamily: 'SFProRegular', color: supportTextColor, fontSize: '18px' }}>
+                {totalIDs} Total Cocktails
+            </Typography>
+            </Box>
+
+
             <Box
                 sx={{
                     display: 'flex',

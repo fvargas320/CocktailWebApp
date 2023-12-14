@@ -15,9 +15,15 @@ import MuiAlert from "@mui/material/Alert";
 
 import { removeFromFavorites } from "../../utils/FavoritesLogic";
 import { RemoveCocktailDialog } from "../../components/Lists/ListsDialogs&SkelatalList";
+import {getAuth} from "firebase/auth";
+import {useAuth} from "../../contexts/AuthContext";
 
 const Favorites = () => {
-    const userId = '1'; // Replace with the actual user ID
+
+
+    const { currentUser } = useAuth(); // Use the currentUser from AuthContext
+    const userId = currentUser ? currentUser.uid : null;
+
     const userDocRef = useMemo(() => doc(db, 'users', userId), [userId]);
     const [favoriteCocktails, setFavoriteCocktails] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -123,42 +129,50 @@ const Favorites = () => {
                     {favoriteCocktails.length} Total Favorites
                 </Typography>
             </Box>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 2,
-                    justifyContent: 'center',
-                }}
-            >
-                {isLoading ? (
-                    Array.from(new Array(4)).map((_, index) => (
-                        <Skeleton key={index} animation="wave" variant="rectangular" width={250} height={300} />
-                    ))
-                ) : (
-                    favoriteCocktails.map((cocktail) => (
-                        <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
-                            <CocktailCard
-                                id={cocktail.Cocktail_ID}
-                                image={cocktail.Image_url}
-                                name={cocktail.Cocktail_Name}
-                                strength={cocktail.Strength}
-                                level={cocktail.Difficulty_Level}
-                                flavor={cocktail.Main_Flavor}
-                            />
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                startIcon={<DeleteForeverIcon />}
-                                onClick={() => handleRemove(userId, cocktail.Cocktail_ID.toString())}
-                                sx={{ position: 'absolute', top: 0, right: 0 }}
-                            >
-                                Delete
-                            </Button>
-                        </Box>
-                    ))
-                )}
-            </Box>
+
+            {favoriteCocktails.length === 0 ? (
+                <Typography variant="h5" align="center" mt={4}>
+                    No Favorites Yet
+                </Typography>
+            ) : (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 2,
+                        justifyContent: 'center',
+                    }}
+                >
+                    {isLoading ? (
+                        Array.from(new Array(4)).map((_, index) => (
+                            <Skeleton key={index} animation="wave" variant="rectangular" width={250} height={300} />
+                        ))
+                    ) : (
+                        favoriteCocktails.map((cocktail) => (
+                            <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
+                                <CocktailCard
+                                    id={cocktail.Cocktail_ID}
+                                    image={cocktail.Image_url}
+                                    name={cocktail.Cocktail_Name}
+                                    strength={cocktail.Strength}
+                                    level={cocktail.Difficulty_Level}
+                                    flavor={cocktail.Main_Flavor}
+                                />
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    startIcon={<DeleteForeverIcon />}
+                                    onClick={() => handleRemove(userId, cocktail.Cocktail_ID.toString())}
+                                    sx={{ position: 'absolute', top: 0, right: 0 }}
+                                >
+                                    Delete
+                                </Button>
+                            </Box>
+                        ))
+                    )}
+                </Box>
+            )}
+
             <RemoveCocktailDialog
                 open={removeCocktailDialogOpen}
                 onClose={() => setRemoveCocktailDialogOpen(false)}
@@ -180,11 +194,14 @@ const Favorites = () => {
                 </MuiAlert>
             </Snackbar>
 
-            <Divider className="py-8">
-                <Chip label="No More Favorites" />
-            </Divider>
+            {favoriteCocktails.length > 0 && (
+                <Divider className="py-8">
+                    <Chip label="No More Favorites" />
+                </Divider>
+            )}
         </div>
     );
+
 };
 
 export default Favorites;
