@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { doc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
-import {db} from '../../firebase';
+import { db } from '../../firebase';
 import Box from '@mui/material/Box';
 import CocktailCard from '../../components/Cocktail/CocktailCard';
 import Divider from "@mui/material/Divider";
@@ -15,12 +15,10 @@ import MuiAlert from "@mui/material/Alert";
 
 import { removeFromFavorites } from "../../utils/FavoritesLogic";
 import { RemoveCocktailDialog } from "../../components/Lists/ListsDialogs&SkelatalList";
-import {getAuth} from "firebase/auth";
-import {useAuth} from "../../contexts/AuthContext";
+import { getAuth } from "firebase/auth";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Favorites = () => {
-
-
     const { currentUser } = useAuth(); // Use the currentUser from AuthContext
     const userId = currentUser ? currentUser.uid : null;
 
@@ -97,12 +95,10 @@ const Favorites = () => {
         }
     };
 
-
     const handleOpenSnackbar = (message) => {
         setSnackbarMessage(message);
         setSnackbarOpen(true);
     };
-
 
     return (
         <div>
@@ -125,52 +121,86 @@ const Favorites = () => {
                     </Box>
                 </Typography>
 
-                <Typography sx={{ fontFamily: 'SFProRegular', color: supportTextColor, fontSize: '18px' }}>
-                    {favoriteCocktails.length} Total Favorites
-                </Typography>
+                {isLoading ? (
+                    <Skeleton variant="text" width={160} sx={{ fontSize: '1rem' }} />
+                ) : (
+                    <Typography sx={{ fontFamily: 'SFProRegular', color: supportTextColor, fontSize: '18px' }}>
+                        {favoriteCocktails.length} Total Favorites
+                    </Typography>
+                )}
             </Box>
 
-            {favoriteCocktails.length === 0 ? (
-                <Typography variant="h5" align="center" mt={4}>
-                    No Favorites Yet
-                </Typography>
-            ) : (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 2,
-                        justifyContent: 'center',
-                    }}
-                >
-                    {isLoading ? (
-                        Array.from(new Array(4)).map((_, index) => (
-                            <Skeleton key={index} animation="wave" variant="rectangular" width={250} height={300} />
-                        ))
-                    ) : (
-                        favoriteCocktails.map((cocktail) => (
-                            <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
-                                <CocktailCard
-                                    id={cocktail.Cocktail_ID}
-                                    image={cocktail.Image_url}
-                                    name={cocktail.Cocktail_Name}
-                                    strength={cocktail.Strength}
-                                    level={cocktail.Difficulty_Level}
-                                    flavor={cocktail.Main_Flavor}
-                                />
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    startIcon={<DeleteForeverIcon />}
-                                    onClick={() => handleRemove(userId, cocktail.Cocktail_ID.toString())}
-                                    sx={{ position: 'absolute', top: 0, right: 0 }}
-                                >
-                                    Delete
-                                </Button>
-                            </Box>
-                        ))
-                    )}
+            {isLoading ? (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {Array.from(new Array(6)).map((_, index) => (
+                        <Box key={index} sx={{ mr: 4, mb: 2 }}>
+                            <Skeleton
+                                animation="wave"
+                                variant="rectangular"
+                                width={250}
+                                height={300}
+                            />
+                        </Box>
+                    ))}
                 </Box>
+            ) : (
+                <>
+                    {favoriteCocktails.length === 0 && (
+                        <Typography variant="h5" align="center" mt={4}>
+                            No Favorites Yet
+                        </Typography>
+                    )}
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: 2,
+                            justifyContent: 'center',
+                        }}
+                    >
+                        {isLoading ? (
+                            <>
+
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    {Array.from(new Array(6)).map((_, index) => (
+                                        <Box key={index} sx={{ mr: 4, mb: 2 }}>
+                                            <Skeleton
+                                                animation="wave"
+                                                variant="rectangular"
+                                                width={250}
+                                                height={300}
+                                            />
+                                        </Box>
+                                    ))}
+                                </Box>
+                            </>
+
+                        ) : (
+                            favoriteCocktails.map((cocktail) => (
+                                <Box key={cocktail.Cocktail_ID} sx={{ position: 'relative' }}>
+                                    <CocktailCard
+                                        id={cocktail.Cocktail_ID}
+                                        image={cocktail.Image_url}
+                                        name={cocktail.Cocktail_Name}
+                                        strength={cocktail.Strength}
+                                        level={cocktail.Difficulty_Level}
+                                        flavor={cocktail.Main_Flavor}
+                                    />
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        startIcon={<DeleteForeverIcon />}
+                                        onClick={() => handleRemove(userId, cocktail.Cocktail_ID.toString())}
+                                        sx={{ position: 'absolute', top: 0, right: 0 }}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Box>
+                            ))
+                        )}
+                    </Box>
+                </>
             )}
 
             <RemoveCocktailDialog
@@ -201,7 +231,6 @@ const Favorites = () => {
             )}
         </div>
     );
-
-};
+}
 
 export default Favorites;
