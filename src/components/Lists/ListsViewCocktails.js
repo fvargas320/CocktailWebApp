@@ -20,6 +20,7 @@ const ListsViewCocktails = () => {
     const [loading, setLoading] = useState(true); // State for loading
     const { currentUser } = useAuth(); // Use the currentUser from AuthContext
     const userId = currentUser ? currentUser.uid : null;
+    const [listDescription, setListDescription] = useState(''); // Declare and initialize listDescription state
 
     useEffect(() => {
         async function fetchCocktailsForList() {
@@ -34,6 +35,7 @@ const ListsViewCocktails = () => {
                     const endIndex = startIndex + cocktailsPerPage;
                     const pageCocktails = list.cocktails.slice(startIndex, endIndex);
                     setCocktails(pageCocktails);
+                    setListDescription(list.description); // Set the list description
                     setLoading(false); // Set loading to false once data is fetched
                 } else {
                     console.log(`List "${listName}" not found.`);
@@ -54,15 +56,14 @@ const ListsViewCocktails = () => {
     // Define the default and hover colors
     const defaultColor = '#000000';
     const supportTextColor = '#8A8A8D';
-
     return (
         <div>
             <Box
                 sx={{
                     padding: '0 16px', // Standard-sized padding on left and right
                     display: 'flex',
-                    justifyContent: 'space-between', // Align items on the left and right edges
-                    alignItems: 'center', // Vertically center items
+                    flexDirection: 'column',
+                    alignItems: 'center',
                 }}
                 mb={2}
             >
@@ -75,6 +76,14 @@ const ListsViewCocktails = () => {
                         {listName}
                     </Box>
                 </Typography>
+
+                {loading ? (
+                    <Skeleton variant="text" width={160} sx={{ fontSize: '1rem' }} />
+                ) : (
+                    <Typography sx={{ fontFamily: 'SFProRegular', color: supportTextColor, fontSize: '18px' }}>
+                        {listDescription} {/* Display the list description */}
+                    </Typography>
+                )}
 
                 {loading ? (
                     <Skeleton variant="text" width={160} sx={{ fontSize: '1rem' }} />
@@ -147,6 +156,7 @@ const ListsViewCocktails = () => {
             </Stack>
         </div>
     );
+
 };
 
 export default ListsViewCocktails;
