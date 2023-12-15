@@ -40,7 +40,7 @@ export default function HelloWorld() {
 
     return (
         <Box display={'flex'} flexDirection={'column'} gap={'32px'}>
-            <Typography variant='h3' textAlign={'center'} fontWeight={'bold'}>Modify Firebase Document Value</Typography>
+            <Typography variant='h3' textAlign={'center'} fontWeight={'bold'} style={{textDecoration: "underline"}}>Modify Firebase Document Value</Typography>
             <Typography variant='h3' textAlign={'center'}>Firebase Document Value = <span style={{color:"red"}}>{stringValue}</span></Typography>
             <Box style={textFieldContainerStyle}>
                 <TextField 
