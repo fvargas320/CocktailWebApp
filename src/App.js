@@ -15,6 +15,7 @@ import SignInPage from './pages/Authentication/SignInPage';
 import Lists from "./pages/NavigationPages/ListsPage";
 import ListsViewCocktails from "./pages/CocktailPages/ListsViewCocktails";
 import PrivateRoute from "./components/NavigationComponents/PrivateRoute";
+import HelloWorld from './pages/HW/HelloWorld';
 
 function App({signOut}) {
 
@@ -31,6 +32,7 @@ function App({signOut}) {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/signin" element={<SignInPage/>} />
+                    <Route path="/helloworld" element={<HelloWorld/>} />
 
                     <Route path="/favorites" element={<PrivateRoute element={Favorites} />} />
                     <Route path="/lists" element={<PrivateRoute element={Lists} />} />
