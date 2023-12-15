@@ -121,7 +121,7 @@ const TopNavBar = () => {
                         color: 'inherit',
                       }}
                   >
-                    DRINKLY LOGO
+                    DRINKLY
                   </Typography>
                   <Tabs value={value} onChange={handleTabChange} sx={{ flexGrow: 1 }} textColor="inherit">
                     {pages.map((page, index) => (
