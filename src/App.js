@@ -22,6 +22,7 @@ function App({signOut}) {
     const appBarHeight = theme.mixins.toolbar.minHeight; // Get AppBar height
 
     return (
+        //Using React Router
         <Router>
             <TopNavBar signOut={signOut}/>
             <div style={{ marginTop: appBarHeight + 20 }}>
